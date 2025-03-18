@@ -1,0 +1,24 @@
+<%- layout('layout/boilerPlate') %>
+
+<div class="container">
+    <div class="row row-cols-2">
+      <% for(post of allPosts) { %>
+      <div class="card col" style="width: 18rem;">
+        <img class="card-img-top round mt-2"
+          src="<%= post.imageUrl  %>"
+          alt="Card image cap">
+        <div class="card-body">
+          <h5 class="card-title"><%= post.title%></h5>
+          <p class="card-text"><%= post.description%></p>
+          <form id="delete-btn" action="/artistans/v2/delete/<%= post._id %>?_method=DELETE" method="POST">
+            <button class="btn btn-primary">Delete</button>
+          </form>
+          <a href="/artistans/v2/edit/<%= post._id %>" class="btn btn-primary">Edit</button></a>
+        </div>
+        
+      </div>
+      <%}%>
+    </div>
+  
+</div>
+

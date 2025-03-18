@@ -1,0 +1,48 @@
+/* body{
+  background-color: black !important;
+} */
+
+.container {
+  min-height: 100vh; /* Ensures the container takes full height */
+  overflow-y: auto; /* Enables scrolling */
+}
+
+.navbarBg{
+  justify-content: space-between;
+}
+
+.parent{
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  
+}
+
+.card{
+  margin-top: 10px !important;
+  /* height: 300px !important; */
+  width: 24rem !important;
+  border: none !important;
+}
+
+.round{
+  border-radius: 25px !important;
+  height: 18rem !important;
+}
+
+.row{
+  justify-content: space-around;
+}
+
+.nav-link:hover{
+  opacity: 1 !important;
+}
+
+.postRow{
+  display: block !important;
+  /* color: white !important; */
+}
+
+#delete-btn{
+  margin-bottom: 5px !important;
+}
