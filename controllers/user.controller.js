@@ -13,7 +13,7 @@ const postUploadController = async (req, res) => {
   const post = req.body;
   // console.log(req.body)
   console.log(post);
-  if (!post.imgUrl || !post.title || !post.description) {
+  if (!post.imgUrl || !post.title || !post.description || !post.price) {
     return res.status(400).json({
       message: "Please fill all the details!",
     });
@@ -22,6 +22,7 @@ const postUploadController = async (req, res) => {
   const newPost = await Post.create({
     imageUrl: post.imgUrl,
     title: post.title,
+    price: post.price,
     description: post.description,
   });
   console.log(newPost);
@@ -57,7 +58,7 @@ const editPostController = async (req, res) => {
 
 const updatePostController = async (req, res) => {
   const { id } = req.params;
-  const { imageUrl, title, description } = req.body;
+  const { imageUrl, title, description, price } = req.body;
   try {
     console.log(req.body);
     if (!id) {
@@ -72,6 +73,7 @@ const updatePostController = async (req, res) => {
       {
         imageUrl,
         title,
+        price,
         description,
       }
     );
@@ -85,9 +87,10 @@ const updatePostController = async (req, res) => {
     await post.save();
     res.redirect("/artistans/v2/home");
   } catch (err) {
-    res.status(401).json({
-      message: "Post edited!",
-      success: true,
+    return res.status(401).json({
+      message: "Something went wrong!",
+      err,
+      success: false,
     });
   }
 };

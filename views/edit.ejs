@@ -11,6 +11,10 @@
       <input type="text" name="title" class="form-control" value="<%= post.title %>" >
     </div>
     <div class="mb-3 col-5">
+      <label for="price" class="form-label">Price</label>
+      <input type="number" name="price" class="form-control" value="<%= post.price %>" >
+    </div>
+    <div class="mb-3 col-5">
       <label for="discription" class="form-label">Description</label>
       <textarea class="form-control" name="description" rows="3" ><%= post.description %></textarea>
     </div>

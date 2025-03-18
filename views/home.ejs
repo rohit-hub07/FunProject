@@ -9,7 +9,7 @@
           alt="Card image cap">
         <div class="card-body">
           <h5 class="card-title"><%= post.title%></h5>
-          <p class="card-text"><%= post.description%></p>
+          <p class="card-text">Rs <%= post.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","); %></p>
           <form id="delete-btn" action="/artistans/v2/delete/<%= post._id %>?_method=DELETE" method="POST">
             <button class="btn btn-primary">Delete</button>
           </form>
