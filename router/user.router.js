@@ -1,4 +1,4 @@
-import {editPostController, postController, postUploadController, userController,updatePostController, deletePostController } from '../controllers/user.controller.js';
+import {showPostController,editPostController, postController, postUploadController, userController,updatePostController, deletePostController } from '../controllers/user.controller.js';
 
 import express from 'express'
 
@@ -18,5 +18,7 @@ router.get('/edit/:id', editPostController)
 router.patch('/post/:id', updatePostController)
 
 router.delete('/delete/:id', deletePostController)
+
+router.get('/show/:id', showPostController)
 
 export default router

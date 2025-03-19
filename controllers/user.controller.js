@@ -115,6 +115,32 @@ const deletePostController = async (req, res) => {
   res.redirect("/artistans/v2/home");
 };
 
+const showPostController = async(req,res) => {
+  const { id } = req.params;
+  try{
+    if(!id){
+      return res.status(401).json({
+        message: "Invalid Id!",
+      })
+    }
+    const post = await Post.findById({_id: id});
+  
+    if(!post){
+      return res.status(401).json({
+        message: "Post doesn't exist",
+        success: false,
+      })
+    }
+    res.render('show', {post})
+  } catch(err){
+    return res.status(401).json({
+      message: "Something went wrong!",
+      err,
+      success: false,
+    })
+  }
+}
+
 export {
   postController,
   userController,
@@ -122,4 +148,5 @@ export {
   editPostController,
   updatePostController,
   deletePostController,
+  showPostController
 };
