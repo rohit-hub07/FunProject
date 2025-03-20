@@ -1,152 +1,73 @@
-import Post from "../models/Post.model.js";
+import User from "../models/User.model.js";
+import { v4 as uuidv4 } from 'uuid';
+import { setUser } from "../utils/auth.middleware.js";
 
-const userController = async (req, res) => {
-  let allPosts = await Post.find({});
-  res.render("home", { allPosts });
-};
-
-const postController = (req, res) => {
-  res.render("post");
-};
-
-const postUploadController = async (req, res) => {
-  const post = req.body;
-  // console.log(req.body)
-  console.log(post);
-  if (!post.imgUrl || !post.title || !post.description || !post.price) {
-    return res.status(400).json({
-      message: "Please fill all the details!",
-    });
-  }
-
-  const newPost = await Post.create({
-    imageUrl: post.imgUrl,
-    title: post.title,
-    price: post.price,
-    description: post.description,
-  });
-  console.log(newPost);
-  if (!newPost) {
-    return res.status(400).json({
-      message: "Some error occured while posting!",
-    });
-  }
-  await newPost.save();
-  res.redirect("/artistans/v2/home");
-};
-
-const editPostController = async (req, res) => {
-  const { id } = req.params;
-  // console.log(id);
+const signupUser = async (req, res) => {
   try {
-    const post = await Post.findById({ _id: id });
-    console.log(post);
-    if (!post) {
-      return res.status(401).json({
-        message: "Post doesn't exist!",
-        success: false,
-      });
-    }
-    res.render("edit", { post });
+    res.render("./user/signup");
   } catch (err) {
-    return res.status(401).json({
-      message: "Something went wrong!",
-      success: false,
+    res.status(401).json({
+      message: "Can't find singup page!",
     });
   }
 };
 
-const updatePostController = async (req, res) => {
-  const { id } = req.params;
-  const { imageUrl, title, description, price } = req.body;
+const registerUser = async (req, res) => {
+  const userCredentials = req.body;
+  // console.log(userCredentials);
   try {
-    console.log(req.body);
-    if (!id) {
-      return res.status(401).json({
-        message: "Id is invalid",
-        success: false,
+    const user = await User.create({
+      name: userCredentials.name,
+      email: userCredentials.email,
+      password: userCredentials.password,
+    });
+
+    if (!user) {
+      return res.status(400).json({
+        message: "Something went wrong!",
       });
     }
 
-    const post = await Post.findByIdAndUpdate(
-      { _id: id },
-      {
-        imageUrl,
-        title,
-        price,
-        description,
-      }
-    );
-    if (!post) {
-      return res.status(401).json({
-        message: "Post doesn't exist",
-        success: false,
-      });
-    }
-    console.log(post);
-    await post.save();
+    await user.save();
     res.redirect("/artistans/v2/home");
   } catch (err) {
-    return res.status(401).json({
-      message: "Something went wrong!",
+    res.status(401).json({
+      message: "User not registered!",
       err,
       success: false,
     });
   }
 };
 
-const deletePostController = async (req, res) => {
-  const { id } = req.params;
-  console.log(id)
-  if (!id) {
-    return res.status(401).json({
-      message: "Id is invalid!",
-      success: false,
-    });
-  }
-  const post = await Post.findByIdAndDelete({ _id: id });
-  if (!post) {
-    return res.status(401).json({
-      message: "Post doesn't exist!",
-      success: false,
-    });
-  }
-
-  res.redirect("/artistans/v2/home");
+const loginUser = async (req, res) => {
+  res.render("./user/login");
 };
 
-const showPostController = async(req,res) => {
-  const { id } = req.params;
-  try{
-    if(!id){
-      return res.status(401).json({
-        message: "Invalid Id!",
+const checkLoginDetails = async (req, res) => {
+  const { email, password } = req.body;
+  if (!email || !password) {
+    return res.status(400).json({
+      message: "Please enter all the details!",
+    });
+  }
+  try {
+    const user = await User.findOne({ email, password });
+    if (!user) {
+      return res.render('./user/login',{
+        error: "Invalid email or password",
       })
     }
-    const post = await Post.findById({_id: id});
-  
-    if(!post){
-      return res.status(401).json({
-        message: "Post doesn't exist",
-        success: false,
-      })
-    }
-    res.render('show', {post})
-  } catch(err){
-    return res.status(401).json({
-      message: "Something went wrong!",
+    const sessionId = uuidv4();
+    setUser(sessionId, user);
+    res.cookie('uuid', sessionId);
+    res.redirect('/artistans/v2/home')
+  } catch (err) {
+    res.status(401).json({
+      message: "Sonething went wrong!",
       err,
       success: false,
     })
   }
-}
-
-export {
-  postController,
-  userController,
-  postUploadController,
-  editPostController,
-  updatePostController,
-  deletePostController,
-  showPostController
 };
+
+export { signupUser, registerUser, loginUser, checkLoginDetails };

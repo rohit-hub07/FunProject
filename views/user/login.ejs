@@ -1,0 +1,26 @@
+<%- layout('layout/boilerPlate') %>
+
+<form class="needs-validation" method=POST action="/artistans/v2/login" novalidate>
+  <div class="row postRow offset-2">
+    <br>
+    <h1>Login Form</h1>
+    <br>
+    <div class="mb-3 col-5">
+      <label for="email" class="form-label">Email</label>
+      <input type="email" name="email" class="form-control" placeholder="Enter your email" required>
+      <div class="invalid-feedback">
+        Please Enter your email!
+      </div>
+    </div>
+    <div class="mb-3 col-5">
+      <label for="password" class="form-label">Password</label>
+      <input type="text" name="password" class="form-control" placeholder="Enter your password" required>
+      <div class="invalid-feedback">
+        Please enter password!
+      </div>
+    </div>
+    <div class="submitBtn">
+      <button class="btn btn-primary">Submit</button>
+    </div>
+  </div>
+</form>

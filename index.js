@@ -2,6 +2,7 @@ import userRouter from './router/user.router.js'
 import engine from 'ejs-mate'
 import express from 'express'
 import path from 'path'
+import cookieParser from 'cookie-parser'
 import { fileURLToPath } from 'url';
 import Db from './dataBase/db.js'
 import methodOverride from 'method-Override'
@@ -26,6 +27,7 @@ app.set('view engine', 'ejs')
 app.use(express.json());
 app.use(express.urlencoded({extended: true}))
 app.use(methodOverride('_method'))
+app.use(cookieParser())
 
 const port = 4000;
 
