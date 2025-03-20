@@ -8,6 +8,14 @@ import Db from './dataBase/db.js'
 import methodOverride from 'method-Override'
 
 
+//session imports
+import User from './models/User.model.js'
+import session from "express-session";
+import passport from "passport";
+import LocalStrategy from "passport-local";
+import flash from "connect-flash";
+// import { fileURLToPath } from "url";
+
 const __filename = fileURLToPath(import.meta.url); 
 const __dirname = path.dirname(__filename);
 
@@ -28,6 +36,36 @@ app.use(express.json());
 app.use(express.urlencoded({extended: true}))
 app.use(methodOverride('_method'))
 app.use(cookieParser())
+
+//session
+app.use(session({
+  secret: "secretcode",
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    expires: Date.now() + 7 * 24 * 60 * 60 * 1000,
+    maxAge: 7 * 24 * 60 * 60 * 1000,
+    httpOnly: true,
+  }
+}));
+app.use(flash());
+
+// Passport middleware
+app.use(passport.initialize());
+app.use(passport.session());
+
+// Passport Local Strategy
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
+// Flash messages middleware
+app.use((req, res, next) => {
+  res.locals.success = req.flash("success");
+  res.locals.error = req.flash("error");
+  next();
+});
+
 
 const port = 4000;
 

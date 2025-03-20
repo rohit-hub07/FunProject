@@ -33,6 +33,7 @@ const postUploadController = async (req, res) => {
     });
   }
   await newPost.save();
+  req.flash('success', "New post created!")
   res.redirect("/artistans/v2/home");
 };
 
