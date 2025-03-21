@@ -1,14 +1,19 @@
-
-
 <nav class="navbar nav-btn navbar-fixed-top navbar-expand-lg bg-body-tertiary bg-info.bg-gradient ">
   <div class="container-fluid  bg-primary navbarBg">
-    <a class="navbar-brand"  href="/artistans/v2/home">Artistans</a>
+    <a class="navbar-brand" href="/artistans/v2/home">Artistans</a>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
       <div class="navbar-nav">
         <a class="nav-link" href="/artistans/v2/post">Upload Art</a>
-        <a class="nav-link" href="/artistans/v2/login">Login</a>
-        <a class="nav-link" href="/artistans/v2/signup">Singup</a>
+        <% if(currUser) {%>
+          <a class="nav-link" href="/artistans/v2/logout">Logout</a>
+        <%}%>
+        <% if(!currUser) {%>
+          <a class="nav-link" href="/artistans/v2/login">Login</a>
+           <a class="nav-link" href="/artistans/v2/signup">Singup</a>
+        <%}%>
+        
       </div>
     </div>
   </div>
 </nav>
+

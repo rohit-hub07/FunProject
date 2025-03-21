@@ -1,0 +1,32 @@
+<%- layout('layout/boilerPlate') %>
+
+  <form class="needs-validation" method=GET action="/artistans/v2/order/<%= post._id %>" novalidate>
+    <div class="row postRow offset-2">
+      <div class="mb-3 col-5">
+        <img src="<%= post.imageUrl %>" />
+      </div>
+      <div class="mb-3 col-5">
+        <p>
+          <%= post.title %>
+        </p>
+      </div>
+      <div class="mb-3 col-5">
+        <p>Rs <%= post.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "," ) %>
+        </p>
+      </div>
+      <div class="mb-3 col-5">
+        <p><b>
+            <%= post.description %>
+          </b></p>
+      </div>
+          <button id="order-btn" class="btn btn-primary">Order</button>
+    </div>
+  </form>
+
+  <%if(currUser && post.owner._id.equals(currUser._id)){%>
+    <form id="delete-btn" action="/artistans/v2/delete/<%= post._id %>?_method=DELETE" method="POST">
+      <button id="order-btn" class="btn btn-primary">Delete</button>
+    </form>
+    <a href="/artistans/v2/edit/<%= post._id %>" ><button id="order-btn"
+        class="btn edit-btn text-center btn-primary">Edit</button></a>
+    <%}%>

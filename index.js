@@ -1,4 +1,3 @@
-import userRouter from './router/user.router.js'
 import engine from 'ejs-mate'
 import express from 'express'
 import path from 'path'
@@ -6,8 +5,12 @@ import cookieParser from 'cookie-parser'
 import { fileURLToPath } from 'url';
 import Db from './dataBase/db.js'
 import methodOverride from 'method-Override'
+import postRouter from './router/post.router.js'
+import userRouter from './router/user.router.js'
+import dotenv from 'dotenv';
+import cors from 'cors'
 
-
+dotenv.config();
 //session imports
 import User from './models/User.model.js'
 import session from "express-session";
@@ -15,6 +18,7 @@ import passport from "passport";
 import LocalStrategy from "passport-local";
 import flash from "connect-flash";
 // import { fileURLToPath } from "url";
+
 
 const __filename = fileURLToPath(import.meta.url); 
 const __dirname = path.dirname(__filename);
@@ -31,6 +35,14 @@ app.set('views', path.join(__dirname, 'views'))
 // console.log('Views Directory:', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs')
 
+//cors
+const corsOptions = {
+  origin: process.env.BASE_URL
+}
+
+app.use(cors(corsOptions))
+
+
 //Middlewares
 app.use(express.json());
 app.use(express.urlencoded({extended: true}))
@@ -39,7 +51,7 @@ app.use(cookieParser())
 
 //session
 app.use(session({
-  secret: "secretcode",
+  secret: process.env.SECRET,
   resave: false,
   saveUninitialized: false,
   cookie: {
@@ -54,6 +66,8 @@ app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 
+
+
 // Passport Local Strategy
 passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
@@ -63,14 +77,21 @@ passport.deserializeUser(User.deserializeUser());
 app.use((req, res, next) => {
   res.locals.success = req.flash("success");
   res.locals.error = req.flash("error");
+  res.locals.currUser = req.user;
+  // console.log("res.locals.currUser:", res.locals.currUser);
   next();
 });
 
 
 const port = 4000;
 
-app.use('/artistans/v2',userRouter)
+app.use('/artistans/v2',postRouter)
+app.use('/artistans/v2', userRouter)
 
+// app.use((req, res, next) => { //This middleware checks the local user
+//   res.locals.currUser = req.user
+//   next()
+// })
 
 Db();
 app.listen(port, () => {

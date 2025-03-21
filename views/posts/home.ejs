@@ -13,13 +13,12 @@
             </h5>
             <p class="card-text">Rs <%= post.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "," ) %>
             </p>
-            <form id="delete-btn" action="/artistans/v2/delete/<%= post._id %>?_method=DELETE" method="POST">
-              <button class="btn btn-primary">Delete</button>
-            </form>
-            <a href="/artistans/v2/edit/<%= post._id %>" class="btn btn-primary">Edit</button></a>
+            
           </div>
         </div>
         <%}%>
     </div>
 
   </div>
+
+  

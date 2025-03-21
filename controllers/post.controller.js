@@ -1,30 +1,41 @@
 import Post from "../models/Post.model.js";
-
+import User from "../models/User.model.js";
+import { isOwner } from "../utils/auth.user.js";
 
 const userController = async (req, res) => {
-  let allPosts = await Post.find({});
-  res.render("home", { allPosts });
+  let allPosts = await Post.find({}).populate("owner");
+  res.render("./posts/home", { allPosts, isOwner });
 };
 
 const postController = (req, res) => {
-  res.render("post");
+  res.render("./posts/post");
 };
 
 const postUploadController = async (req, res) => {
   const post = req.body;
+  console.log(post)
   // console.log(req.body)
-  console.log(post);
+  const user = req.user._id;
+  console.log(user) 
+  // console.log(post);
+  if(!user){
+    return res.status(404).json({
+      message: "User not found!"
+    })
+  }
+
   if (!post.imgUrl || !post.title || !post.description || !post.price) {
     return res.status(400).json({
       message: "Please fill all the details!",
     });
   }
 
-  const newPost = await Post.create({
+  const newPost = await new Post({
     imageUrl: post.imgUrl,
     title: post.title,
     price: post.price,
     description: post.description,
+    owner: user
   });
   console.log(newPost);
   if (!newPost) {
@@ -49,7 +60,7 @@ const editPostController = async (req, res) => {
         success: false,
       });
     }
-    res.render("edit", { post });
+    res.render("./posts/edit", { post });
   } catch (err) {
     return res.status(401).json({
       message: "Something went wrong!",
@@ -133,7 +144,7 @@ const showPostController = async(req,res) => {
         success: false,
       })
     }
-    res.render('show', {post})
+    res.render('./posts/show', {post})
   } catch(err){
     return res.status(401).json({
       message: "Something went wrong!",
@@ -160,7 +171,7 @@ const orderPostController = async(req, res) => {
       })
     }
 
-    res.render('order', {post})
+    res.render('./posts/order', {post})
   } catch(err){
     res.status(401).json({
       message: "Something went wrong!",

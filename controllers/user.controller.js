@@ -34,6 +34,7 @@ const registerUser = async (req, res) => {
 };
 
 const loginUser = async (req, res) => {
+  
   res.render("./user/login");
 };
 
@@ -48,9 +49,10 @@ const logOutUser = async(req, res, next) => {
 }
 
 const loginUserController = async (req, res) => {
-
+  // console.log(req.body)
+  // console.log(req.user);
+  // res.locals.currUser = req.user;
   req.flash("success","User loggedIn successful!");
-
   res.redirect("/artistans/v2/home");
 };
 
