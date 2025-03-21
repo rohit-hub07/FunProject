@@ -1,4 +1,6 @@
 import mongoose from 'mongoose'
+import User from './User.model.js';
+const Schema = mongoose.Schema;
 
 const postSchema = new mongoose.Schema({
   imageUrl: {
@@ -20,6 +22,10 @@ const postSchema = new mongoose.Schema({
       validator : Number.isInteger,
       message   : '{VALUE} is not an integer value'
     }
+  },
+  owner: {
+    type: Schema.Types.ObjectId,
+    ref: "User"
   }
 })
 

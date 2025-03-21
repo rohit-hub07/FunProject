@@ -1,6 +1,5 @@
 import User from "../models/User.model.js";
-import { v4 as uuidv4 } from 'uuid';
-import { setUser } from "../utils/auth.middleware.js";
+
 
 const signupUser = async (req, res) => {
   try {
@@ -13,61 +12,48 @@ const signupUser = async (req, res) => {
 };
 
 const registerUser = async (req, res) => {
-  const userCredentials = req.body;
+  const {username, email, password } = req.body;
   // console.log(userCredentials);
   try {
-    const user = await User.create({
-      name: userCredentials.name,
-      email: userCredentials.email,
-      password: userCredentials.password,
+    const user = new User({
+      username,
+      email,
     });
+    console.log(user)
+    const registeredUser = await User.register(user,password);
+    console.log(registeredUser)
+    req.flash("success", "Registration successful! Please log in.");
+    res.redirect("/artistans/v2/login");
 
-    if (!user) {
-      return res.status(400).json({
-        message: "Something went wrong!",
-      });
-    }
-
-    await user.save();
-    res.redirect("/artistans/v2/home");
   } catch (err) {
-    res.status(401).json({
-      message: "User not registered!",
-      err,
-      success: false,
-    });
+    req.flash("error", err.message);
+    console.log(err)
+    // res.redirect("/artistans/v2/signup");
+    res.send("Something went wrong")
   }
 };
 
 const loginUser = async (req, res) => {
+  
   res.render("./user/login");
 };
 
-const checkLoginDetails = async (req, res) => {
-  const { email, password } = req.body;
-  if (!email || !password) {
-    return res.status(400).json({
-      message: "Please enter all the details!",
-    });
-  }
-  try {
-    const user = await User.findOne({ email, password });
-    if (!user) {
-      return res.render('./user/login',{
-        error: "Invalid email or password",
-      })
+const logOutUser = async(req, res, next) => {
+  req.logout((err) =>{
+    if(err){
+      next(err);
     }
-    const sessionId = uuidv4();
-    setUser(sessionId, user);
-    res.cookie('uuid', sessionId);
+    req.flash("success", "Logout Successful")
     res.redirect('/artistans/v2/home')
-  } catch (err) {
-    res.status(401).json({
-      message: "Sonething went wrong!",
-      err,
-      success: false,
-    })
-  }
+  })
+}
+
+const loginUserController = async (req, res) => {
+  // console.log(req.body)
+  // console.log(req.user);
+  // res.locals.currUser = req.user;
+  req.flash("success","User loggedIn successful!");
+  res.redirect("/artistans/v2/home");
 };
 
-export { signupUser, registerUser, loginUser, checkLoginDetails };
+export { signupUser, registerUser, loginUser,loginUserController, logOutUser };

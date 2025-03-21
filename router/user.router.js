@@ -1,41 +1,23 @@
-import {showPostController,editPostController, postController, postUploadController, userController,updatePostController, deletePostController, orderPostController } from '../controllers/post.controller.js';
-
-
-import { signupUser, registerUser, loginUser, checkLoginDetails } from '../controllers/user.controller.js';
-
-import checkLoginUser from '../middlewares/authMiddleware.js';
-
 import express from 'express'
+import passport from 'passport';
+import { authenticateUser} from '../utils/auth.user.js';
 
-
+import { signupUser, registerUser, loginUser,loginUserController, logOutUser } from '../controllers/user.controller.js';
 
 const router = express.Router()
 
-
-router.get('/home', userController)
-
-router.get('/post',checkLoginUser, postController)
-
-router.post('/post',checkLoginUser, postUploadController)
-
-router.get('/edit/:id',checkLoginUser, editPostController)
-
-router.patch('/post/:id',checkLoginUser, updatePostController)
-
-router.delete('/delete/:id',checkLoginUser, deletePostController)
-
-router.get('/show/:id',checkLoginUser, showPostController)
-
-router.get('/order/:id',checkLoginUser, orderPostController)
-
-
-//user signup and login routes
 router.get('/signup', signupUser)
 
 router.post('/signup', registerUser)
 
 router.get('/login', loginUser)
 
-router.post('/login', checkLoginDetails)
+router.get('/logout',authenticateUser, logOutUser)
 
-export default router
+router.post('/login',passport.authenticate("local", {
+  failureRedirect: "/artistans/v2/login",
+  failureFlash: true,
+}), loginUserController)
+
+
+export default router;
