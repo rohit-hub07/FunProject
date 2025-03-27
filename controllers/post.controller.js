@@ -1,5 +1,4 @@
 import Post from "../models/Post.model.js";
-import User from "../models/User.model.js";
 import { isOwner } from "../utils/auth.user.js";
 
 const userController = async (req, res) => {
@@ -21,7 +20,6 @@ const postUploadController = async (req, res) => {
   }
   const user = req.user._id;
 
-  console.log(user) 
   // console.log(post);
   if(!user){
     return res.status(404).json({
@@ -62,7 +60,7 @@ const editPostController = async (req, res) => {
   // console.log(id);
   try {
     const post = await Post.findById({ _id: id });
-    console.log(post);
+    // console.log(post);
     if (!post) {
       return res.status(401).json({
         message: "Post doesn't exist!",
@@ -82,7 +80,7 @@ const updatePostController = async (req, res) => {
   const { id } = req.params;
   const { imageUrl, title, description, price } = req.body;
   try {
-    console.log(req.body);
+    // console.log(req.body);
     if (!id) {
       return res.status(401).json({
         message: "Id is invalid",
@@ -105,7 +103,7 @@ const updatePostController = async (req, res) => {
         success: false,
       });
     }
-    console.log(post);
+    // console.log(post);
     await post.save();
     res.redirect("/artistans/v2/home");
   } catch (err) {
@@ -119,7 +117,7 @@ const updatePostController = async (req, res) => {
 
 const deletePostController = async (req, res) => {
   const { id } = req.params;
-  console.log(id)
+  // console.log(id)
   if (!id) {
     return res.status(401).json({
       message: "Id is invalid!",

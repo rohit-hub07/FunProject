@@ -19,15 +19,15 @@ const registerUser = async (req, res) => {
       username,
       email,
     });
-    console.log(user)
+    // console.log(user)
     const registeredUser = await User.register(user,password);
-    console.log(registeredUser)
+    // console.log(registeredUser)
     req.flash("success", "Registration successful! Please log in.");
     res.redirect("/artistans/v2/login");
 
   } catch (err) {
     req.flash("error", err.message);
-    console.log(err)
+    // console.log(err)
     // res.redirect("/artistans/v2/signup");
     res.send("Something went wrong")
   }
