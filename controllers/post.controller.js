@@ -13,9 +13,14 @@ const postController = (req, res) => {
 
 const postUploadController = async (req, res) => {
   const post = req.body;
-  console.log(post)
-  // console.log(req.body)
+  let url = req.file.path;
+  if(!url){
+    return res.status(400).json({
+      message: "Please provide image!"
+    })
+  }
   const user = req.user._id;
+
   console.log(user) 
   // console.log(post);
   if(!user){
@@ -24,14 +29,14 @@ const postUploadController = async (req, res) => {
     })
   }
 
-  if (!post.imgUrl || !post.title || !post.description || !post.price) {
+  if (!post.title || !post.description || !post.price) {
     return res.status(400).json({
       message: "Please fill all the details!",
     });
   }
 
   const newPost = await new Post({
-    imageUrl: post.imgUrl,
+    imageUrl: url,
     title: post.title,
     price: post.price,
     description: post.description,
@@ -47,6 +52,10 @@ const postUploadController = async (req, res) => {
   req.flash('success', "New post created!")
   res.redirect("/artistans/v2/home");
 };
+
+
+
+
 
 const editPostController = async (req, res) => {
   const { id } = req.params;

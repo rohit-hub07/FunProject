@@ -1,10 +1,10 @@
 <%- layout('layout/boilerPlate')  %>
 
-<form class="needs-validation" method=POST action="/artistans/v2/post" novalidate>
+<form class="needs-validation" method=POST action="/artistans/v2/post" enctype="multipart/form-data" novalidate>
   <div class="row postRow offset-2">
     <div class="mb-3 col-5">
       <label for="imgUrl" class="form-label">Image Link</label>
-      <input type="text" name="imgUrl" class="form-control" placeholder="Please provide Image Url" required>
+      <input type="file" name="imgUrl" class="form-control" placeholder="Please provide Image Url" required>
       <div class="invalid-feedback">
         Please give image url!
       </div>
