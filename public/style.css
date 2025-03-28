@@ -2,8 +2,8 @@
   background-color: black !important;
 } */
 
-body{
-  color: #0D47A1 !important;
+body {
+  color: #0d47a1 !important;
 }
 
 .container {
@@ -11,66 +11,64 @@ body{
   overflow-y: auto; /* Enables scrolling */
 }
 
-.navbarBg{
+.navbarBg {
   justify-content: space-between;
 }
 
-.parent{
+.parent {
   display: flex !important;
   align-items: center !important;
   justify-content: space-between !important;
-  
 }
 
-.card{
+.card {
   margin-top: 10px !important;
   /* height: 300px !important; */
   width: 24rem !important;
   border: none !important;
 }
 
-.round{
+.round {
   border-radius: 25px !important;
   height: 18rem !important;
 }
 
-.row{
+.row {
   justify-content: space-around;
 }
 
-.nav-link:hover{
+.nav-link:hover {
   opacity: 1 !important;
 }
 
-.postRow{
+.postRow {
   display: block !important;
   /* color: white !important; */
 }
 
-#delete-btn{
+#delete-btn {
   margin-bottom: 5px !important;
 }
 
-
-a{
+a {
   text-decoration: none !important;
 }
 
-#order-btn{
+#order-btn {
   height: 50px !important;
   width: 120px !important;
 }
 
-.navbarBg{
-  background-color: #E3F2FD  !important;
+.navbarBg {
+  background-color: #e3f2fd !important;
   display: flex;
   justify-content: space-evenly;
 }
-.collapse{
+.collapse {
   margin-left: 80% !important;
 }
 
-.image{
+.image {
   min-width: 700px !important;
-  max-height: 700px !important;
-} 
+  max-height: 400px !important;
+}
