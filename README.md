@@ -41,8 +41,10 @@ The user just have to login to upload their art. This is most useful for the loc
 - Cloudinary
 
 ## Screenshots
-![Screenshot 2025-03-28 130803](https://github.com/user-attachments/assets/8b7d69b2-109c-4a0c-a507-68796879c099)
 ![Screenshot 2025-03-29 025032](https://github.com/user-attachments/assets/16cb536c-5425-433f-9027-99e4f1a438c5)
+
 ![Screenshot 2025-03-29 025045](https://github.com/user-attachments/assets/13c98bbb-5f9f-444b-872e-b80ceeaa6474)
+
 ![Screenshot 2025-03-29 025057](https://github.com/user-attachments/assets/a0887103-c504-4703-94c8-aabea87def84)
+
 ![Screenshot 2025-03-29 025105](https://github.com/user-attachments/assets/4645be83-d9d4-49f1-82c5-fce16f169629)
