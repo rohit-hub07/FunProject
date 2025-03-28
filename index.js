@@ -83,7 +83,7 @@ app.use((req, res, next) => {
 });
 
 
-const port = 4000;
+const port = process.env.PORT || 5000;
 
 app.use('/artistans/v2',postRouter)
 app.use('/artistans/v2', userRouter)

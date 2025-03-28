@@ -33,7 +33,7 @@ router.post(
 
 router.get("/edit/:id", authenticateUser, isOwner, editPostController);
 
-router.patch("/post/:id", authenticateUser, isOwner, updatePostController);
+router.patch("/post/:id", authenticateUser, isOwner,upload.single("imageUrl"), updatePostController);
 
 router.delete("/delete/:id", authenticateUser, isOwner, deletePostController);
 

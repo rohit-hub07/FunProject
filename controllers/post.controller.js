@@ -78,7 +78,10 @@ const editPostController = async (req, res) => {
 
 const updatePostController = async (req, res) => {
   const { id } = req.params;
-  const { imageUrl, title, description, price } = req.body;
+  // console.log("Reqbody: ", req.body)
+  // console.log("req.file: ",req.file)
+  let url = req.file.path;
+  const { title, description, price } = req.body;
   try {
     // console.log(req.body);
     if (!id) {
@@ -91,7 +94,7 @@ const updatePostController = async (req, res) => {
     const post = await Post.findByIdAndUpdate(
       { _id: id },
       {
-        imageUrl,
+        imageUrl: url,
         title,
         price,
         description,

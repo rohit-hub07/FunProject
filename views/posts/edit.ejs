@@ -1,10 +1,10 @@
 <%- layout('layout/boilerPlate')  %>
 
-<form method="POST" action="/artistans/v2/post/<%= post._id%>?_method=PATCH" >
+<form method="POST" action="/artistans/v2/post/<%= post._id%>?_method=PATCH"enctype="multipart/form-data" >
   <div class="row postRow offset-2">
     <div class="mb-3 col-5">
-      <label for="imgUrl" class="form-label">Image Link</label>
-      <input type="text" name="imageUrl" class="form-control" value="<%= post.imageUrl %>" >
+      <label for="imageUrl" class="form-label">Image Link</label>
+      <input type="file" name="imageUrl" class="form-control" value="<%= post.imageUrl %>" >
     </div>
     <div class="mb-3 col-5">
       <label for="title" class="form-label">Title</label>
