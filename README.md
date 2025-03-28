@@ -25,6 +25,29 @@ To upload art and order any art work the user has to be logged in.
 - Delete
 - Edit
 
+## Installation
+
+1. Clone the repository:
+   ```sh
+   git clone https://github.com/rohit-hub07/College-Artistans-Website-.git
+   ```
+2. Navigate to the project directory:
+   ```sh
+   cd yourproject
+   ```
+3. Install dependencies:
+   ```sh
+   npm install
+   ```
+4. Set up environment variables:
+   ```sh
+   cp .env.example .env
+   ```
+5. Run the project:
+   ```sh
+   npm start
+   ```
+
 ## Usage
 
 The user just have to login to upload their art. This is most useful for the local artist who fail to reach their work to broader audience.
