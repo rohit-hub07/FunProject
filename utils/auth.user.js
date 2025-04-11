@@ -39,7 +39,7 @@ const isOwner = async(req, res, next) => {
     }
     
   }
-  // next();
+  next();
   } catch(err){
     req.flash("error", "Something went wrong!");
     res.redirect('/artistans/v2/home')
