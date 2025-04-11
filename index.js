@@ -89,6 +89,10 @@ const port = process.env.PORT || 5000;
 app.use('/artistans/v2',postRouter)
 app.use('/artistans/v2', userRouter)
 
+app.get("/", (req, res) => {
+  res.redirect("/artistans/v2/home");
+});
+
 // app.use((req, res, next) => { //This middleware checks the local user
 //   res.locals.currUser = req.user
 //   next()
