@@ -11,7 +11,7 @@
             <h5 class="card-title">
               <%= post.title%>
             </h5>
-            <p class="card-text">Created at <%= post.createdAt.toLocaleString() %>
+            <p class="card-text">Created at <%= post.createdAt.toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' }); %>
             </p>
             
           </div>
