@@ -15,19 +15,11 @@ const postSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  price: {
-    type: Number,
-    required: true,
-    validate : {
-      validator : Number.isInteger,
-      message   : '{VALUE} is not an integer value'
-    }
-  },
   owner: {
     type: Schema.Types.ObjectId,
     ref: "User"
   }
-})
+}, {timestamps: true})
 
 const Post = mongoose.model('Post', postSchema);
 

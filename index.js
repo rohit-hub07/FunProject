@@ -93,7 +93,7 @@ app.use('/artistans/v2', userRouter)
 //   next()
 // })
 
-Db();
+await Db();
 app.listen(port, () => {
   console.log(`App is listening to port ${port}`)
 })
