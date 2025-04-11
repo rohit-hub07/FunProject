@@ -4,7 +4,7 @@ import path from 'path'
 import cookieParser from 'cookie-parser'
 import { fileURLToPath } from 'url';
 import Db from './dataBase/db.js'
-import methodOverride from 'method-Override'
+import methodOverride from 'method-override'
 import postRouter from './router/post.router.js'
 import userRouter from './router/user.router.js'
 import dotenv from 'dotenv';
