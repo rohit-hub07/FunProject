@@ -1,25 +1,27 @@
-<%- layout('layout/boilerPlate')  %>
+<%- layout('layout/boilerPlate') %>
 
-<form method="POST" action="/artistans/v2/post/<%= post._id%>?_method=PATCH"enctype="multipart/form-data" >
-  <div class="row postRow offset-2">
-    <div class="mb-3 col-5">
-      <label for="imageUrl" class="form-label">Image Link</label>
-      <input type="file" name="imageUrl" class="form-control" value="<%= post.imageUrl %>" >
+<div class="container">
+  <form method="POST" action="/artistans/v2/post/<%= post._id %>?_method=PATCH" enctype="multipart/form-data">
+    <div class="row justify-content-center">
+      <!-- Image Link -->
+      <div class="col-12 col-md-5 mb-3">
+        <label for="imageUrl" class="form-label">Image Link</label>
+        <input type="file" name="imageUrl" class="form-control" value="<%= post.imageUrl %>">
+      </div>
+      <!-- Title -->
+      <div class="col-12 col-md-5 mb-3">
+        <label for="title" class="form-label">Title</label>
+        <input type="text" name="title" class="form-control" value="<%= post.title %>">
+      </div>
+      <!-- Description -->
+      <div class="col-12 col-md-5 mb-3">
+        <label for="description" class="form-label">Description</label>
+        <textarea class="form-control" name="description" rows="3"><%= post.description %></textarea>
+      </div>
+      <!-- Submit Button -->
+      <div class="col-12 text-center">
+        <button class="btn btn-primary">Submit</button>
+      </div>
     </div>
-    <div class="mb-3 col-5">
-      <label for="title" class="form-label">Title</label>
-      <input type="text" name="title" class="form-control" value="<%= post.title %>" >
-    </div>
-    <div class="mb-3 col-5">
-      <label for="price" class="form-label">Price</label>
-      <input type="number" name="price" class="form-control" value="<%= post.price %>" >
-    </div>
-    <div class="mb-3 col-5">
-      <label for="discription" class="form-label">Description</label>
-      <textarea class="form-control" name="description" rows="3" ><%= post.description %></textarea>
-    </div>
-    <div class="submitBtn">
-      <button class="btn btn-primary">Submit</button>
-    </div>
-  </div>
-</form>
+  </form>
+</div>

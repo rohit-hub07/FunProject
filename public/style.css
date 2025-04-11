@@ -69,6 +69,8 @@ a {
 }
 
 .image {
-  min-width: 700px !important;
+  min-width: 250px !important;
+  max-width: 700px !important;
   max-height: 400px !important;
+  /* min-height: 400px !important; */
 }
