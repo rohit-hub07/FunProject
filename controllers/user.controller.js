@@ -12,12 +12,13 @@ const signupUser = async (req, res) => {
 };
 
 const registerUser = async (req, res) => {
-  const {username, email, password } = req.body;
+  const {username, email,role, password } = req.body;
   // console.log(userCredentials);
   try {
     const user = new User({
       username,
       email,
+      role,
     });
     // console.log(user)
     const registeredUser = await User.register(user,password);
@@ -34,7 +35,7 @@ const registerUser = async (req, res) => {
 };
 
 const loginUser = async (req, res) => {
-  
+  // console.log(req.user)
   res.render("./user/login");
 };
 

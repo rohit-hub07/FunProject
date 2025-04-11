@@ -27,7 +27,7 @@ const postUploadController = async (req, res) => {
     })
   }
 
-  if (!post.title || !post.description || !post.price) {
+  if (!post.title || !post.description) {
     return res.status(400).json({
       message: "Please fill all the details!",
     });
@@ -36,11 +36,10 @@ const postUploadController = async (req, res) => {
   const newPost = await new Post({
     imageUrl: url,
     title: post.title,
-    price: post.price,
     description: post.description,
     owner: user
   });
-  console.log(newPost);
+  // console.log(newPost);
   if (!newPost) {
     return res.status(400).json({
       message: "Some error occured while posting!",
@@ -147,7 +146,7 @@ const showPostController = async(req,res) => {
       })
     }
     const post = await Post.findById({_id: id});
-  
+    // console.log(post)
     if(!post){
       return res.status(401).json({
         message: "Post doesn't exist",
@@ -155,6 +154,7 @@ const showPostController = async(req,res) => {
       })
     }
     res.render('./posts/show', {post})
+    // console.log("Inside show route currUser",currUser)
   } catch(err){
     return res.status(401).json({
       message: "Something went wrong!",

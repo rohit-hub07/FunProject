@@ -11,7 +11,7 @@
         </p>
       </div>
       <div class="mb-3 col-5">
-        <p>Posted on <%= post.createdAt %>
+        <p>Posted on <%= post.createdAt.toLocaleString() %>
         </p>
       </div>
       <div class="mb-3 col-5">
@@ -19,12 +19,11 @@
             <%= post.description %>
           </b></p>
       </div>
-      <button id="order-btn" class="btn btn-primary">Order</button>
     </div>
   </form>
 
   <div class="button-div offset-2">
-    <%if(currUser && post.owner._id.equals(currUser._id)){%>
+    <%if(currUser && (post.owner._id.equals(currUser._id) || currUser.role==="admin")){%>
       <div class="mb-2 ms-0 col-12 mt-2">
         <form id="delete-btn" action="/artistans/v2/delete/<%= post._id %>?_method=DELETE" method="POST">
           <button id="order-btn" class="btn btn-primary">Delete</button>
