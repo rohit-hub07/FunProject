@@ -3,19 +3,19 @@
 <div class="container">
   <form class="needs-validation" method="GET" action="/artistans/v2/order/<%= post._id %>" novalidate>
     <div class="row postRow justify-content-center">
-      <!-- Image Section -->
+      
       <div class="col-12 col-md-5 mb-3">
         <img class="img-fluid" src="<%= post.imageUrl %>" alt="<%= post.title %>">
       </div>
-      <!-- Title Section -->
+ 
       <div class="col-12 col-md-5 mb-3 d-flex align-items-center">
         <h2 class="mb-0"><%= post.title %></h2>
       </div>
-      <!-- Posted Date Section -->
+  
       <div class="col-12 col-md-5 mb-3">
         <p class="mb-0">Posted on <%= post.createdAt.toLocaleString() %></p>
       </div>
-      <!-- Description Section -->
+
       <div class="col-12 col-md-5 mb-3">
         <p class="fw-bold mb-0"><%= post.description %></p>
       </div>
