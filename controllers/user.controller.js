@@ -27,10 +27,10 @@ const registerUser = async (req, res) => {
     res.redirect("/artistans/v2/login");
 
   } catch (err) {
-    req.flash("error", err.message);
+    return req.flash("error", err.message);
     // console.log(err)
     // res.redirect("/artistans/v2/signup");
-    res.send("Something went wrong")
+    // res.send("Something went wrong")
   }
 };
 

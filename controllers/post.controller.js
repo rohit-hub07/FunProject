@@ -1,3 +1,4 @@
+import { log } from "console";
 import Post from "../models/Post.model.js";
 import { isOwner } from "../utils/auth.user.js";
 
@@ -11,48 +12,42 @@ const postController = (req, res) => {
 };
 
 const postUploadController = async (req, res) => {
-  const post = req.body;
-  let url = req.file.path;
-  if(!url){
-    return res.status(400).json({
-      message: "Please provide image!"
-    })
-  }
-  const user = req.user._id;
+  try {
+    const post = req.body;
+    let url = req.file.path;
+    if (!url) {
+      return res.status(400).json({
+        message: "Please provide image!",
+      });
+    }
+    const user = req.user._id;
 
-  // console.log(post);
-  if(!user){
-    return res.status(404).json({
-      message: "User not found!"
-    })
-  }
+    // console.log(post);
+    if (!user) {
+      return req.flash("error", "User not found!");
+    }
 
-  if (!post.title || !post.description) {
-    return res.status(400).json({
-      message: "Please fill all the details!",
+    if (!post.title || !post.description) {
+      return req.flash("error", "Please fill all the details!");
+    }
+
+    const newPost = await new Post({
+      imageUrl: url,
+      title: post.title,
+      description: post.description,
+      owner: user,
     });
+    // console.log(newPost);
+    if (!newPost) {
+      return req.flash("error", "Some error occured!");
+    }
+    await newPost.save();
+    req.flash("success", "New post created!");
+    res.redirect("/artistans/v2/home");
+  } catch (error) {
+    return req.flash("error", "Something went wrong while uploading post!");
   }
-
-  const newPost = await new Post({
-    imageUrl: url,
-    title: post.title,
-    description: post.description,
-    owner: user
-  });
-  // console.log(newPost);
-  if (!newPost) {
-    return res.status(400).json({
-      message: "Some error occured while posting!",
-    });
-  }
-  await newPost.save();
-  req.flash('success', "New post created!")
-  res.redirect("/artistans/v2/home");
 };
-
-
-
-
 
 const editPostController = async (req, res) => {
   const { id } = req.params;
@@ -61,59 +56,41 @@ const editPostController = async (req, res) => {
     const post = await Post.findById({ _id: id });
     // console.log(post);
     if (!post) {
-      return res.status(401).json({
-        message: "Post doesn't exist!",
-        success: false,
-      });
+      return req.flash("error", "Post doesn't exist!");
     }
     res.render("./posts/edit", { post });
   } catch (err) {
-    return res.status(401).json({
-      message: "Something went wrong!",
-      success: false,
-    });
+    return req.flash("error", "Something went wrong!");
   }
 };
 
 const updatePostController = async (req, res) => {
   const { id } = req.params;
-  // console.log("Reqbody: ", req.body)
-  // console.log("req.file: ",req.file)
-  let url = req.file.path;
-  const { title, description, price } = req.body;
+  const { title, description } = req.body;
+
   try {
     // console.log(req.body);
-    if (!id) {
-      return res.status(401).json({
-        message: "Id is invalid",
-        success: false,
-      });
+    const post = await Post.findById(id);
+    if (!post) {
+      req.flash("error", "Post doesn't exist");
+      return res.redirect("/artistans/v2/home");
     }
 
-    const post = await Post.findByIdAndUpdate(
-      { _id: id },
-      {
-        imageUrl: url,
-        title,
-        price,
-        description,
-      }
-    );
-    if (!post) {
-      return res.status(401).json({
-        message: "Post doesn't exist",
-        success: false,
-      });
+    // Update the text fields
+    post.title = title;
+    post.description = description;
+
+    // Update the image if available.
+    if (req.file) {
+      post.imageUrl = req.file.path;
     }
-    // console.log(post);
+
     await post.save();
+    req.flash("success", "Post updated successfully!");
     res.redirect("/artistans/v2/home");
+
   } catch (err) {
-    return res.status(401).json({
-      message: "Something went wrong!",
-      err,
-      success: false,
-    });
+    return req.flash("error", "Something went wrong while updating the post!");
   }
 };
 
@@ -121,77 +98,58 @@ const deletePostController = async (req, res) => {
   const { id } = req.params;
   // console.log(id)
   if (!id) {
-    return res.status(401).json({
-      message: "Id is invalid!",
-      success: false,
-    });
+    return req.flash("error", "Post doesn't exist with the given Id!");
   }
   const post = await Post.findByIdAndDelete({ _id: id });
   if (!post) {
-    return res.status(401).json({
-      message: "Post doesn't exist!",
-      success: false,
-    });
+    return req.flash("error", "Post doesn't exist!");
   }
-
+  req.flash("success", "Post deleted successfully!");
   res.redirect("/artistans/v2/home");
 };
 
-const showPostController = async(req,res) => {
+const showPostController = async (req, res) => {
   const { id } = req.params;
-  try{
-    if(!id){
-      return res.status(401).json({
-        message: "Invalid Id!",
-      })
+  try {
+    if (!id) {
+      return req.flash("error", "Invalid Id!");
     }
-    const post = await Post.findById({_id: id});
+    const post = await Post.findById({ _id: id });
     // console.log(post)
-    if(!post){
-      return res.status(401).json({
-        message: "Post doesn't exist",
-        success: false,
-      })
+    if (!post) {
+      return req.flash("error", "Post doesn't exist!");
     }
-    res.render('./posts/show', {post})
+    res.render("./posts/show", { post });
     // console.log("Inside show route currUser",currUser)
-  } catch(err){
-    return res.status(401).json({
-      message: "Something went wrong!",
-      err,
-      success: false,
-    })
+  } catch (err) {
+    return req.flash("error", "Something went wrong while showing the post!");
   }
-}
+};
 
-const orderPostController = async(req, res) => {
+const orderPostController = async (req, res) => {
   const { id } = req.params;
-  try{
-    if(!id){
-      return res.status(401).json({
-        message: "id is invalid!",
-      })
+  try {
+    if (!id) {
+      return req.flash("error", "Invalid Id!");
     }
-  
-    const post = await Post.findById({ _id: id});
-    if(!post){
+
+    const post = await Post.findById({ _id: id });
+    if (!post) {
       return res.status(400).json({
         message: "Picture is not available",
         success: false,
-      })
+      });
     }
 
-    res.render('./posts/order', {post})
-  } catch(err){
+    res.render("./posts/order", { post });
+  } catch (err) {
     res.status(401).json({
       message: "Something went wrong!",
       err,
       success: false,
-    })
+    });
   }
-}
-
-
+};
 
 export {
   postController,
@@ -201,5 +159,5 @@ export {
   updatePostController,
   deletePostController,
   showPostController,
-  orderPostController
+  orderPostController,
 };
