@@ -32,7 +32,7 @@ const isOwner = async(req, res, next) => {
   // console.log("Post owner: ",post.owner)
   if(!post.owner.equals(res.locals.currUser._id)){
     if(role ==="admin"){
-      next();
+      return next();
     }else{
       req.flash("error", "You are not the owner of this post!");
       return res.redirect('/artistans/v2/home')
