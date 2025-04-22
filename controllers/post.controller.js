@@ -1,6 +1,7 @@
 import { log } from "console";
 import Post from "../models/Post.model.js";
 import { isOwner } from "../utils/auth.user.js";
+import User from "../models/User.model.js";
 
 const userController = async (req, res) => {
   let allPosts = await Post.find({}).populate("owner");
@@ -21,7 +22,11 @@ const postUploadController = async (req, res) => {
       });
     }
     const user = req.user._id;
-
+    const owner = await User.findById(user);
+    if (!owner) {
+      return req.flash("error", "Post owner is not defined!");
+    }
+    // console.log(owner);
     // console.log(post);
     if (!user) {
       return req.flash("error", "User not found!");
@@ -36,6 +41,7 @@ const postUploadController = async (req, res) => {
       title: post.title,
       description: post.description,
       owner: user,
+      ownername: owner.username,
     });
     // console.log(newPost);
     if (!newPost) {
@@ -43,7 +49,7 @@ const postUploadController = async (req, res) => {
     }
     await newPost.save();
     req.flash("success", "New post created!");
-    res.redirect("/artistans/v2/home");
+    res.redirect("/moments/v1/home");
   } catch (error) {
     return req.flash("error", "Something went wrong while uploading post!");
   }
@@ -73,7 +79,7 @@ const updatePostController = async (req, res) => {
     const post = await Post.findById(id);
     if (!post) {
       req.flash("error", "Post doesn't exist");
-      return res.redirect("/artistans/v2/home");
+      return res.redirect("/moments/v1/home");
     }
 
     // Update the text fields
@@ -87,8 +93,7 @@ const updatePostController = async (req, res) => {
 
     await post.save();
     req.flash("success", "Post updated successfully!");
-    res.redirect("/artistans/v2/home");
-
+    res.redirect("/moments/v1/home");
   } catch (err) {
     return req.flash("error", "Something went wrong while updating the post!");
   }
@@ -105,7 +110,7 @@ const deletePostController = async (req, res) => {
     return req.flash("error", "Post doesn't exist!");
   }
   req.flash("success", "Post deleted successfully!");
-  res.redirect("/artistans/v2/home");
+  res.redirect("/moments/v1/home");
 };
 
 const showPostController = async (req, res) => {

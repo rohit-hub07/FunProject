@@ -1,6 +1,5 @@
 import User from "../models/User.model.js";
 
-
 const signupUser = async (req, res) => {
   try {
     res.render("./user/signup");
@@ -12,7 +11,7 @@ const signupUser = async (req, res) => {
 };
 
 const registerUser = async (req, res) => {
-  const {username, email,role, password } = req.body;
+  const { username, email, role, password } = req.body;
   // console.log(userCredentials);
   try {
     const user = new User({
@@ -21,15 +20,14 @@ const registerUser = async (req, res) => {
       role,
     });
     // console.log(user)
-    const registeredUser = await User.register(user,password);
+    const registeredUser = await User.register(user, password);
     // console.log(registeredUser)
     req.flash("success", "Registration successful! Please log in.");
-    res.redirect("/artistans/v2/login");
-
+    res.redirect("/moments/v1/login");
   } catch (err) {
     return req.flash("error", err.message);
     // console.log(err)
-    // res.redirect("/artistans/v2/signup");
+    // res.redirect("/moments/v1/signup");
     // res.send("Something went wrong")
   }
 };
@@ -39,22 +37,22 @@ const loginUser = async (req, res) => {
   res.render("./user/login");
 };
 
-const logOutUser = async(req, res, next) => {
-  req.logout((err) =>{
-    if(err){
+const logOutUser = async (req, res, next) => {
+  req.logout((err) => {
+    if (err) {
       next(err);
     }
-    req.flash("success", "Logout Successful")
-    res.redirect('/artistans/v2/home')
-  })
-}
+    req.flash("success", "Logout Successful");
+    res.redirect("/moments/v1/home");
+  });
+};
 
 const loginUserController = async (req, res) => {
   // console.log(req.body)
   // console.log(req.user);
   // res.locals.currUser = req.user;
-  req.flash("success","User loggedIn successful!");
-  res.redirect("/artistans/v2/home");
+  req.flash("success", "User loggedIn successful!");
+  res.redirect("/moments/v1/home");
 };
 
-export { signupUser, registerUser, loginUser,loginUserController, logOutUser };
+export { signupUser, registerUser, loginUser, loginUserController, logOutUser };

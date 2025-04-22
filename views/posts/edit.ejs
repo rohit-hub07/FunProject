@@ -1,27 +1,27 @@
 <%- layout('layout/boilerPlate') %>
 
-<div class="container">
-  <form method="POST" action="/artistans/v2/post/<%= post._id %>?_method=PATCH" enctype="multipart/form-data">
-    <div class="row justify-content-center">
-      <!-- Image Link -->
-      <div class="col-12 col-md-5 mb-3">
-        <label for="imageUrl" class="form-label">Image Link</label>
-        <input type="file" name="imageUrl" class="form-control" value="<%= post.imageUrl %>">
+  <div class="container">
+    <form method="POST" action="/moments/v1/post/<%= post._id %>?_method=PATCH" enctype="multipart/form-data">
+      <div class="row justify-content-center">
+        <!-- Image Link -->
+        <div class="col-12 col-md-5 mb-3">
+          <label for="imageUrl" class="form-label">Image Link</label>
+          <input type="file" name="imageUrl" class="form-control" value="<%= post.imageUrl %>">
+        </div>
+        <!-- Title -->
+        <div class="col-12 col-md-5 mb-3">
+          <label for="title" class="form-label">Title</label>
+          <input type="text" name="title" class="form-control" value="<%= post.title %>">
+        </div>
+        <!-- Description -->
+        <div class="col-12 col-md-5 mb-3">
+          <label for="description" class="form-label">Description</label>
+          <textarea class="form-control" name="description" rows="3"><%= post.description %></textarea>
+        </div>
+        <!-- Submit Button -->
+        <div class="col-12 text-center">
+          <button class="btn btn-primary">Submit</button>
+        </div>
       </div>
-      <!-- Title -->
-      <div class="col-12 col-md-5 mb-3">
-        <label for="title" class="form-label">Title</label>
-        <input type="text" name="title" class="form-control" value="<%= post.title %>">
-      </div>
-      <!-- Description -->
-      <div class="col-12 col-md-5 mb-3">
-        <label for="description" class="form-label">Description</label>
-        <textarea class="form-control" name="description" rows="3"><%= post.description %></textarea>
-      </div>
-      <!-- Submit Button -->
-      <div class="col-12 text-center">
-        <button class="btn btn-primary">Submit</button>
-      </div>
-    </div>
-  </form>
-</div>
+    </form>
+  </div>

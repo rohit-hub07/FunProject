@@ -1,39 +1,44 @@
 <%- layout('layout/boilerPlate') %>
 
-<div class="container">
-  <form class="needs-validation" method="GET" action="/artistans/v2/order/<%= post._id %>" novalidate>
-    <div class="row postRow justify-content-center">
-      
-      <div class="col-12 col-md-5 mb-3">
-        <img class="img-fluid" src="<%= post.imageUrl %>" alt="<%= post.title %>">
-      </div>
- 
-      <div class="col-12 col-md-5 mb-3 d-flex align-items-center">
-        <h2 class="mb-0"><%= post.title %></h2>
-      </div>
-  
-      <div class="col-12 col-md-5 mb-3">
-        <p class="mb-0">Posted on <%= post.createdAt.toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' }); %></p>
-      </div>
+  <div class="container">
+    <form class="needs-validation" method="GET" action="/moments/v1/order/<%= post._id %>" novalidate>
+      <div class="row postRow justify-content-center">
 
-      <div class="col-12 col-md-5 mb-3">
-        <p class="fw-bold mb-0"><%= post.description %></p>
-      </div>
-    </div>
-  </form>
+        <div class="col-12 col-md-5 mb-3">
+          <img class="img-fluid" src="<%= post.imageUrl %>" alt="<%= post.title %>">
+        </div>
 
-  <% if (currUser && (post.owner._id.equals(currUser._id) || currUser.role === "admin")) { %>
-    <div class="row justify-content-center">
-      <div class="col-12 col-md-6 mb-2">
-        <form id="delete-btn" action="/artistans/v2/delete/<%= post._id %>?_method=DELETE" method="POST">
-          <button id="order-btn" class="btn btn-danger w-100">Delete</button>
-        </form>
+        <div class="col-12 col-md-5 mb-3 d-flex align-items-center">
+          <h2 class="mb-0">
+            <%= post.title %>
+          </h2>
+        </div>
+
+        <div class="col-12 col-md-5 mb-3">
+          <p class="mb-0">Posted on <%= post.createdAt.toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' }); %>
+          </p>
+        </div>
+
+        <div class="col-12 col-md-5 mb-3">
+          <p class="fw-bold mb-0">
+            <%= post.description %>
+          </p>
+        </div>
       </div>
-      <div class="col-12 col-md-6 mb-2">
-        <a href="/artistans/v2/edit/<%= post._id %>" class="d-block">
-          <button id="order-btn" class="btn btn-primary w-100">Edit</button>
-        </a>
+    </form>
+
+    <% if (currUser && (post.owner._id.equals(currUser._id) || currUser.role==="admin" )) { %>
+      <div class="row justify-content-center">
+        <div class="col-12 col-md-6 mb-2">
+          <form id="delete-btn" action="/moments/v1/delete/<%= post._id %>?_method=DELETE" method="POST">
+            <button id="order-btn" class="btn btn-danger w-100">Delete</button>
+          </form>
+        </div>
+        <div class="col-12 col-md-6 mb-2">
+          <a href="/moments/v1/edit/<%= post._id %>" class="d-block">
+            <button id="order-btn" class="btn btn-primary w-100">Edit</button>
+          </a>
+        </div>
       </div>
-    </div>
-  <% } %>
-</div>
+      <% } %>
+  </div>

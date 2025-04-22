@@ -18,6 +18,9 @@ const postSchema = new mongoose.Schema({
   owner: {
     type: Schema.Types.ObjectId,
     ref: "User"
+  },
+  ownername: {
+    type: String,
   }
 }, {timestamps: true})
 

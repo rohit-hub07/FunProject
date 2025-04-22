@@ -1,6 +1,6 @@
 <!-- <%- layout('layout/boilerPlate') %>
 
-<form class="needs-validation" method=POST action="/artistans/v2/login" novalidate>
+<form class="needs-validation" method=POST action="/moments/v1/login" novalidate>
   <div class="row postRow offset-2">
     <br>
     <h1>Login Form</h1>
@@ -28,29 +28,29 @@
 
 <%- layout('layout/boilerPlate') %>
 
-<div class="container">
-  <form class="needs-validation" method="POST" action="/artistans/v2/login" novalidate>
-    <div class="row justify-content-center">
-      <div class="col-12">
-        <h1 class="text-center my-3">Login Form</h1>
-      </div>
-      <div class="col-12 col-md-5 mb-3">
-        <label for="username" class="form-label">Username</label>
-        <input type="text" name="username" class="form-control" placeholder="Enter your username" required>
-        <div class="invalid-feedback">
-          Please enter your username!
+  <div class="container">
+    <form class="needs-validation" method="POST" action="/moments/v1/login" novalidate>
+      <div class="row justify-content-center">
+        <div class="col-12">
+          <h1 class="text-center my-3">Login Form</h1>
+        </div>
+        <div class="col-12 col-md-5 mb-3">
+          <label for="username" class="form-label">Username</label>
+          <input type="text" name="username" class="form-control" placeholder="Enter your username" required>
+          <div class="invalid-feedback">
+            Please enter your username!
+          </div>
+        </div>
+        <div class="col-12 col-md-5 mb-3">
+          <label for="password" class="form-label">Password</label>
+          <input type="password" name="password" class="form-control" placeholder="Enter your password" required>
+          <div class="invalid-feedback">
+            Please enter your password!
+          </div>
+        </div>
+        <div class="col-12 text-center">
+          <button class="btn btn-primary">Submit</button>
         </div>
       </div>
-      <div class="col-12 col-md-5 mb-3">
-        <label for="password" class="form-label">Password</label>
-        <input type="password" name="password" class="form-control" placeholder="Enter your password" required>
-        <div class="invalid-feedback">
-          Please enter your password!
-        </div>
-      </div>
-      <div class="col-12 text-center">
-        <button class="btn btn-primary">Submit</button>
-      </div>
-    </div>
-  </form>
-</div>
+    </form>
+  </div>

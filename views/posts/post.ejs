@@ -1,36 +1,36 @@
 <%- layout('layout/boilerPlate') %>
 
-<div class="container">
-  <form class="needs-validation" method="POST" action="/artistans/v2/post" enctype="multipart/form-data" novalidate>
-    <div class="row justify-content-center">
-      <!-- Image Input Field -->
-      <div class="col-12 col-md-5 mb-3">
-        <label for="imgUrl" class="form-label">Image Link</label>
-        <input type="file" name="imgUrl" class="form-control" placeholder="Please provide Image Url" required>
-        <div class="invalid-feedback">
-          Please give image url!
+  <div class="container">
+    <form class="needs-validation" method="POST" action="/moments/v1/post" enctype="multipart/form-data" novalidate>
+      <div class="row justify-content-center">
+        <!-- Image Input Field -->
+        <div class="col-12 col-md-5 mb-3">
+          <label for="imgUrl" class="form-label">Image Link</label>
+          <input type="file" name="imgUrl" class="form-control" placeholder="Please provide Image Url" required>
+          <div class="invalid-feedback">
+            Please give image url!
+          </div>
+        </div>
+        <!-- Title Input Field -->
+        <div class="col-12 col-md-5 mb-3">
+          <label for="title" class="form-label">Title</label>
+          <input type="text" name="title" class="form-control" placeholder="Title" required>
+          <div class="invalid-feedback">
+            Please Give a Title!
+          </div>
+        </div>
+        <!-- Description Field -->
+        <div class="col-12 col-md-10 mb-3">
+          <label for="description" class="form-label">Description</label>
+          <textarea class="form-control" name="description" rows="3" required></textarea>
+          <div class="invalid-feedback">
+            Description cannot be empty!
+          </div>
+        </div>
+        <!-- Submit Button -->
+        <div class="col-12 text-center">
+          <button class="btn btn-primary">Submit</button>
         </div>
       </div>
-      <!-- Title Input Field -->
-      <div class="col-12 col-md-5 mb-3">
-        <label for="title" class="form-label">Title</label>
-        <input type="text" name="title" class="form-control" placeholder="Title" required>
-        <div class="invalid-feedback">
-          Please Give a Title!
-        </div>
-      </div>
-      <!-- Description Field -->
-      <div class="col-12 col-md-10 mb-3">
-        <label for="description" class="form-label">Description</label>
-        <textarea class="form-control" name="description" rows="3" required></textarea>
-        <div class="invalid-feedback">
-          Description cannot be empty!
-        </div>
-      </div>
-      <!-- Submit Button -->
-      <div class="col-12 text-center">
-        <button class="btn btn-primary">Submit</button>
-      </div>
-    </div>
-  </form>
-</div>
+    </form>
+  </div>

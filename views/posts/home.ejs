@@ -4,21 +4,20 @@
     <div class="row row-cols-2">
       <% for(post of allPosts) { %>
         <div class="card col" style="width: 18rem;">
-          <a href="/artistans/v2/show/<%=post._id %>">
+          <a href="/moments/v1/show/<%=post._id %>">
             <img class="card-img-top round mt-2" src="<%= post.imageUrl  %>" alt="Card image cap">
           </a>
           <div class="card-body">
             <h5 class="card-title">
               <%= post.title%>
             </h5>
-            <p class="card-text">Created at <%= post.createdAt.toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' }); %>
+            <p class="card-text">Posted by: <%= post && post.ownername ? post.ownername : "bikram" %>
+
             </p>
-            
+
           </div>
         </div>
         <%}%>
     </div>
 
   </div>
-
-  
