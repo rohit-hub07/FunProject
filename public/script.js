@@ -18,3 +18,22 @@
       }, false)
     })
 })()
+
+
+
+async function hidePost(postId) {
+  console.log('Trying to hide:', postId); // ✅ See in browser console
+  
+  const response = await fetch(`/moments/v1/hide/${postId}`, {
+    method: 'POST',
+  });
+
+  if (response.ok) {
+    console.log('Post hidden successfully');
+    document.getElementById(postId).style.display = 'none'; // ✅ Hide it
+  } else {
+    console.log('Failed to hide post');
+    alert('Failed to hide post');
+  }
+}
+

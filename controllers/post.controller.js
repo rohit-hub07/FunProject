@@ -5,7 +5,8 @@ import User from "../models/User.model.js";
 
 const userController = async (req, res) => {
   let allPosts = await Post.find({}).populate("owner");
-  res.render("./posts/home", { allPosts, isOwner });
+  const visiblePosts = allPosts.filter(p => !p.hidePost);
+  res.render("./posts/home", { allPosts:visiblePosts, isOwner });
 };
 
 const postController = (req, res) => {
@@ -156,6 +157,24 @@ const orderPostController = async (req, res) => {
   }
 };
 
+const hidePostController = async(req, res) => {
+  const { id} = req.params;
+  try {
+    const post = await Post.findById({_id: id});
+    if(!post){
+      return req.flas("error", "Post doesn't exist");
+    }
+
+    post.hidePost = true;
+    console.log("Hidden post: ",post)
+    req.flash("success", "Post hidden Successfully!");
+    await post.save();
+    res.redirect("/moments/v1/home");
+  } catch (error) {
+    return req.flas("error", "Post doesn't exist"); 
+  }
+}
+
 export {
   postController,
   userController,
@@ -165,4 +184,5 @@ export {
   deletePostController,
   showPostController,
   orderPostController,
+  hidePostController
 };

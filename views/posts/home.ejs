@@ -1,23 +1,20 @@
 <%- layout('layout/boilerPlate') %>
 
-  <div class="container">
-    <div class="row row-cols-2">
-      <% for(post of allPosts) { %>
-        <div class="card col" style="width: 18rem;">
-          <a href="/moments/v1/show/<%=post._id %>">
-            <img class="card-img-top round mt-2" src="<%= post.imageUrl  %>" alt="Card image cap">
-          </a>
-          <div class="card-body">
-            <h5 class="card-title">
-              <%= post.title%>
-            </h5>
-            <p class="card-text">Posted by: <%= post && post.ownername ? post.ownername : "bikram" %>
-
-            </p>
-
-          </div>
+<div class="container">
+  <div class="row row-cols-2">
+    <% for(post of allPosts) { %>
+      <div id="<%= post._id %>" class="card col" style="width: 18rem;"> <!-- ADDED id here -->
+        <a href="/moments/v1/show/<%= post._id %>">
+          <img class="card-img-top round mt-2" src="<%= post.imageUrl %>" alt="Card image cap">
+        </a>
+        <div class="card-body">
+          <h5 class="card-title"><%= post.title %></h5>
+          <p class="card-text">
+            Posted by: <%= post && post.ownername ? post.ownername : "bikram" %>
+          </p>
+          <button onclick="hidePost('<%= post._id %>')" class="btn btn-primary w-100">Hide</button>
         </div>
-        <%}%>
-    </div>
-
+      </div>
+    <% } %>
   </div>
+</div>

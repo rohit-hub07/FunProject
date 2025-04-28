@@ -21,6 +21,10 @@ const postSchema = new mongoose.Schema({
   },
   ownername: {
     type: String,
+  },
+  hidePost: {
+    type: Boolean,
+    default: false,
   }
 }, {timestamps: true})
 

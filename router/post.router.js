@@ -12,6 +12,7 @@ import {
   updatePostController,
   deletePostController,
   orderPostController,
+  hidePostController
 } from "../controllers/post.controller.js";
 
 dotenv.config();
@@ -40,5 +41,7 @@ router.delete("/delete/:id", authenticateUser, isOwner, deletePostController);
 router.get("/show/:id", showPostController);
 
 router.get("/order/:id", authenticateUser, orderPostController);
+
+router.post("/hide/:id",authenticateUser,isOwner, hidePostController)
 
 export default router;
