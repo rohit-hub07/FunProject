@@ -1,23 +1,52 @@
 <%- layout('layout/boilerPlate') %>
 
-  <div class="container">
-    <div class="row row-cols-2">
-      <% for(post of allPosts) { %>
-        <div class="card col" style="width: 18rem;">
-          <a href="/moments/v1/show/<%=post._id %>">
-            <img class="card-img-top round mt-2" src="<%= post.imageUrl  %>" alt="Card image cap">
-          </a>
-          <div class="card-body">
-            <h5 class="card-title">
-              <%= post.title%>
-            </h5>
-            <p class="card-text">Posted by: <%= post && post.ownername ? post.ownername : "bikram" %>
-
-            </p>
-
-          </div>
-        </div>
-        <%}%>
+  <div class="gallery-container">
+    <!-- Gallery Header -->
+    <div class="gallery-header">
+      <h1>✨ Beautiful Moments</h1>
+      <p>Discover and share life's precious memories</p>
     </div>
 
+    <!-- Masonry Grid Gallery -->
+    <div class="masonry-grid">
+      <% for(let post of allPosts) { %>
+        <div class="gallery-item">
+          <a href="/moments/v1/show/<%=post._id %>">
+            <div class="gallery-card">
+              <div class="gallery-image-wrapper">
+                <img class="gallery-image" src="<%= post.imageUrl %>" alt="<%= post.title %>" loading="lazy">
+                <div class="gallery-overlay">
+                  <h5>
+                    <%= post.title %>
+                  </h5>
+                  <p>
+                    <%= post && post.ownername ? post.ownername : "bikram" %>
+                  </p>
+                </div>
+              </div>
+              <div class="gallery-card-body">
+                <h5 class="gallery-card-title">
+                  <%= post.title %>
+                </h5>
+                <p class="gallery-card-text">
+                  <%= post && post.ownername ? post.ownername : "bikram" %>
+                </p>
+              </div>
+            </div>
+          </a>
+        </div>
+        <% } %>
+    </div>
+
+    <!-- Empty state if no posts -->
+    <% if(allPosts.length===0) { %>
+      <div style="text-align: center; padding: 4rem 2rem;">
+        <h2 style="font-size: 2rem; color: var(--text-secondary); margin-bottom: 1rem;">📸 No moments yet</h2>
+        <p style="color: var(--text-secondary); margin-bottom: 2rem;">Be the first to share a beautiful moment!</p>
+        <a href="/moments/v1/post" class="btn-edit"
+          style="display: inline-block; padding: 1rem 2rem; border-radius: 12px; text-decoration: none;">
+          Upload Your First Photo
+        </a>
+      </div>
+      <% } %>
   </div>

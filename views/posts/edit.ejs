@@ -1,27 +1,51 @@
 <%- layout('layout/boilerPlate') %>
 
-  <div class="container">
-    <form method="POST" action="/moments/v1/post/<%= post._id %>?_method=PATCH" enctype="multipart/form-data">
-      <div class="row justify-content-center">
-        <!-- Image Link -->
-        <div class="col-12 col-md-5 mb-3">
-          <label for="imageUrl" class="form-label">Image Link</label>
-          <input type="file" name="imageUrl" class="form-control" value="<%= post.imageUrl %>">
+  <div class="form-container">
+    <div class="form-card">
+      <h1 class="form-title">✏️ Edit Moment</h1>
+      <p class="form-subtitle">Update your moment's details</p>
+
+      <form method="POST" action="/moments/v1/post/<%= post._id %>?_method=PATCH" enctype="multipart/form-data">
+        <!-- Current Image Preview -->
+        <div class="form-group">
+          <label class="form-label">Current Image</label>
+          <div style="border-radius: 12px; overflow: hidden; margin-bottom: 1rem;">
+            <img src="<%= post.imageUrl %>" alt="<%= post.title %>" style="width: 100%; height: auto; display: block;">
+          </div>
         </div>
+
+        <!-- New Image Upload (Optional) -->
+        <div class="form-group">
+          <label for="imageUrl" class="form-label">Change Image (Optional)</label>
+          <input type="file" name="imageUrl" id="imageUrl" class="form-control" accept="image/*">
+          <small style="color: var(--text-secondary); font-size: 0.85rem; display: block; margin-top: 0.5rem;">
+            Leave empty to keep the current image
+          </small>
+        </div>
+
         <!-- Title -->
-        <div class="col-12 col-md-5 mb-3">
+        <div class="form-group">
           <label for="title" class="form-label">Title</label>
-          <input type="text" name="title" class="form-control" value="<%= post.title %>">
+          <input type="text" name="title" id="title" class="form-control" value="<%= post.title %>">
         </div>
+
         <!-- Description -->
-        <div class="col-12 col-md-5 mb-3">
+        <div class="form-group">
           <label for="description" class="form-label">Description</label>
-          <textarea class="form-control" name="description" rows="3"><%= post.description %></textarea>
+          <textarea class="form-control" name="description" id="description" rows="4"><%= post.description %></textarea>
         </div>
+
         <!-- Submit Button -->
-        <div class="col-12 text-center">
-          <button class="btn btn-primary">Submit</button>
-        </div>
+        <button type="submit" class="form-submit-btn">
+          💾 Save Changes
+        </button>
+      </form>
+
+      <!-- Back Link -->
+      <div style="text-align: center; margin-top: 1.5rem;">
+        <a href="/moments/v1/show/<%= post._id %>" style="color: var(--text-secondary); font-size: 0.9rem;">
+          ← Cancel and go back
+        </a>
       </div>
-    </form>
+    </div>
   </div>

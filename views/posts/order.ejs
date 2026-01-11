@@ -1,53 +1,80 @@
 <%- layout('layout/boilerPlate') %>
 
-<form class="needs-validation" novalidate>
-  <div class="row postRow offset-2">
-    <div class="mb-3 col-5">
-      <label for="name" class="form-label">Enter your full name</label>
-      <input type="text" name="name" class="form-control" required>
-      <div class="invalid-feedback">
-        Please Enter your Fullname!
-      </div>
-    </div>
-    <div class="mb-3 col-5">
-      <label for="email" class="form-label">Email</label>
-      <input type="email" name="email" class="form-control" required>
-      <div class="invalid-feedback">
-        Please enater your Email!
-      </div>
-    </div>
-    <div class="row">
-      <div class="mb-3 col-4">
-        <label for="pin" class="form-label">Pin Code</label>
-        <input type="number" name="pin" class="form-control" required>
-        <div class="invalid-feedback">
-          Please Give a Pin code!
+  <div class="form-container">
+    <div class="form-card">
+      <h1 class="form-title">📦 Order Information</h1>
+      <p class="form-subtitle">Complete your order details</p>
+
+      <form class="needs-validation" novalidate>
+        <!-- Full Name -->
+        <div class="form-group">
+          <label for="name" class="form-label">Full Name</label>
+          <input type="text" name="name" id="name" class="form-control" placeholder="Enter your full name" required>
+          <div class="invalid-feedback">
+            Please enter your full name
+          </div>
         </div>
-      </div>
-      <div class="mb-3 col-8">
-        <label for="state" class="form-label">State</label>
-        <input type="text" name="state" class="form-control" required style="width: 60% !important;">
-        <div class="invalid-feedback">
-          Please Give a State name!
+
+        <!-- Email -->
+        <div class="form-group">
+          <label for="email" class="form-label">Email Address</label>
+          <input type="email" name="email" id="email" class="form-control" placeholder="your.email@example.com"
+            required>
+          <div class="invalid-feedback">
+            Please enter a valid email address
+          </div>
         </div>
+
+        <!-- Address -->
+        <div class="form-group">
+          <label for="address" class="form-label">Street Address</label>
+          <input type="text" name="address" id="address" class="form-control" placeholder="123 Main Street" required>
+          <div class="invalid-feedback">
+            Please provide a valid address
+          </div>
+        </div>
+
+        <!-- Pin Code and State Row -->
+        <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 1rem;">
+          <div class="form-group">
+            <label for="pin" class="form-label">Pin Code</label>
+            <input type="text" name="pin" id="pin" class="form-control" placeholder="123456" pattern="[0-9]{6}"
+              required>
+            <div class="invalid-feedback">
+              Enter a valid 6-digit pin code
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="state" class="form-label">State</label>
+            <input type="text" name="state" id="state" class="form-control" placeholder="Enter your state" required>
+            <div class="invalid-feedback">
+              Please provide your state name
+            </div>
+          </div>
+        </div>
+
+        <!-- Additional Notes -->
+        <div class="form-group">
+          <label for="description" class="form-label">Additional Notes (Optional)</label>
+          <textarea class="form-control" name="description" id="description" rows="3"
+            placeholder="Any special instructions or notes..."></textarea>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="form-submit-btn">
+          📦 Place Order
+        </button>
+      </form>
+
+      <!-- Back Link -->
+      <div style="text-align: center; margin-top: 1.5rem;">
+        <a href="/moments/v1/home" style="color: var(--text-secondary); font-size: 0.9rem;">
+          ← Back to Gallery
+        </a>
       </div>
-    </div>
-    <div class="mb-3 col-5">
-      <label for="address" class="form-label">Address</label>
-      <input type="text" name="address" class="form-control" required>
-      <div class="invalid-feedback">
-        Please Give a valid address!
-      </div>
-    </div>
-    <div class="mb-3 col-5">
-      <label for="discription" class="form-label">Description</label>
-      <textarea class="form-control" name="description" rows="3" required></textarea>
-      <div class="invalid-feedback">
-        Description can not be empty!
-      </div>
-    </div>
-    <div class="submitBtn">
-      <button class="btn btn-primary">Submit</button>
     </div>
   </div>
-</form>
+  </div>
+  </div>
+  </form>

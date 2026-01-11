@@ -1,56 +1,42 @@
-<!-- <%- layout('layout/boilerPlate') %>
-
-<form class="needs-validation" method=POST action="/moments/v1/login" novalidate>
-  <div class="row postRow offset-2">
-    <br>
-    <h1>Login Form</h1>
-    <br>
-    <div class="mb-3 col-5">
-      <label for="username" class="form-label">Username</label>
-      <input type="text" name="username" class="form-control" placeholder="Enter your username" required>
-      <div class="invalid-feedback">
-        Please Enter your username!
-      </div>
-    </div>
-    <div class="mb-3 col-5">
-      <label for="password" class="form-label">Password</label>
-      <input type="password" name="password" class="form-control" placeholder="Enter your password" required>
-      <div class="invalid-feedback">
-        Please enter password!
-      </div>
-    </div>
-    <div class="submitBtn">
-      <button class="btn btn-primary">Submit</button>
-    </div>
-  </div>
-</form> -->
-
-
 <%- layout('layout/boilerPlate') %>
 
-  <div class="container">
-    <form class="needs-validation" method="POST" action="/moments/v1/login" novalidate>
-      <div class="row justify-content-center">
-        <div class="col-12">
-          <h1 class="text-center my-3">Login Form</h1>
-        </div>
-        <div class="col-12 col-md-5 mb-3">
+  <div class="form-container">
+    <div class="form-card">
+      <h1 class="form-title">🔐 Admin Login</h1>
+      <p class="form-subtitle">Access your admin dashboard</p>
+
+      <form class="needs-validation" method="POST" action="/moments/v1/login" novalidate>
+        <!-- Username -->
+        <div class="form-group">
           <label for="username" class="form-label">Username</label>
-          <input type="text" name="username" class="form-control" placeholder="Enter your username" required>
+          <input type="text" name="username" id="username" class="form-control" placeholder="Enter your username"
+            required autocomplete="username">
           <div class="invalid-feedback">
-            Please enter your username!
+            Please enter your username
           </div>
         </div>
-        <div class="col-12 col-md-5 mb-3">
+
+        <!-- Password -->
+        <div class="form-group">
           <label for="password" class="form-label">Password</label>
-          <input type="password" name="password" class="form-control" placeholder="Enter your password" required>
+          <input type="password" name="password" id="password" class="form-control" placeholder="Enter your password"
+            required autocomplete="current-password">
           <div class="invalid-feedback">
-            Please enter your password!
+            Please enter your password
           </div>
         </div>
-        <div class="col-12 text-center">
-          <button class="btn btn-primary">Submit</button>
-        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="form-submit-btn">
+          🚀 Sign In
+        </button>
+      </form>
+
+      <!-- Back Link -->
+      <div style="text-align: center; margin-top: 1.5rem;">
+        <a href="/moments/v1/home" style="color: var(--text-secondary); font-size: 0.9rem;">
+          ← Back to Gallery
+        </a>
       </div>
-    </form>
+    </div>
   </div>

@@ -1,36 +1,51 @@
 <%- layout('layout/boilerPlate') %>
 
-  <div class="container">
-    <form class="needs-validation" method="POST" action="/moments/v1/post" enctype="multipart/form-data" novalidate>
-      <div class="row justify-content-center">
-        <!-- Image Input Field -->
-        <div class="col-12 col-md-5 mb-3">
-          <label for="imgUrl" class="form-label">Image Link</label>
-          <input type="file" name="imgUrl" class="form-control" placeholder="Please provide Image Url" required>
+  <div class="form-container">
+    <div class="form-card">
+      <h1 class="form-title">📸 Share a Moment</h1>
+      <p class="form-subtitle">Upload and share your beautiful memories</p>
+
+      <form class="needs-validation" method="POST" action="/moments/v1/post" enctype="multipart/form-data" novalidate>
+        <!-- Image Upload -->
+        <div class="form-group">
+          <label for="imgUrl" class="form-label">Choose Image</label>
+          <input type="file" name="imgUrl" id="imgUrl" class="form-control" accept="image/*" required>
           <div class="invalid-feedback">
-            Please give image url!
+            Please select an image to upload
           </div>
         </div>
-        <!-- Title Input Field -->
-        <div class="col-12 col-md-5 mb-3">
+
+        <!-- Title -->
+        <div class="form-group">
           <label for="title" class="form-label">Title</label>
-          <input type="text" name="title" class="form-control" placeholder="Title" required>
+          <input type="text" name="title" id="title" class="form-control"
+            placeholder="Give your moment a memorable title" required>
           <div class="invalid-feedback">
-            Please Give a Title!
+            Please provide a title
           </div>
         </div>
-        <!-- Description Field -->
-        <div class="col-12 col-md-10 mb-3">
+
+        <!-- Description -->
+        <div class="form-group">
           <label for="description" class="form-label">Description</label>
-          <textarea class="form-control" name="description" rows="3" required></textarea>
+          <textarea class="form-control" name="description" id="description" rows="4"
+            placeholder="Share the story behind this moment..." required></textarea>
           <div class="invalid-feedback">
-            Description cannot be empty!
+            Description cannot be empty
           </div>
         </div>
+
         <!-- Submit Button -->
-        <div class="col-12 text-center">
-          <button class="btn btn-primary">Submit</button>
-        </div>
+        <button type="submit" class="form-submit-btn">
+          ✨ Share Moment
+        </button>
+      </form>
+
+      <!-- Back Link -->
+      <div style="text-align: center; margin-top: 1.5rem;">
+        <a href="/moments/v1/home" style="color: var(--text-secondary); font-size: 0.9rem;">
+          ← Back to Gallery
+        </a>
       </div>
-    </form>
+    </div>
   </div>
