@@ -12,7 +12,7 @@ import {
 
 const router = express.Router();
 
-router.get("/signup", signupUser);
+// router.get("/signup", signupUser);
 
 router.post("/signup", registerUser);
 
