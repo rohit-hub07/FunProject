@@ -11,8 +11,19 @@ const signupUser = async (req, res) => {
 };
 
 const registerUser = async (req, res) => {
+  const secret = req.header("admin-secret") || 'no-secret-provided';
+  if (secret != process.env.CREATE_ADMIN_SECRET) {
+    req.flash("error", "You don't have access to perform this action!");
+    return res.redirect("/moments/v1/home");
+  }
   const { username, email, role, password } = req.body;
   // console.log(userCredentials);
+  //check for registered user
+  const existingUser = await User.findOne({ email });
+  if (existingUser) {
+    req.flash("error", "A user already exists with the current credentials!");
+    return res.redirect("/moments/v1/login");
+  }
   try {
     const user = new User({
       username,
@@ -20,15 +31,13 @@ const registerUser = async (req, res) => {
       role,
     });
     // console.log(user)
-    const registeredUser = await User.register(user, password);
+    await User.register(user, password);
     // console.log(registeredUser)
     req.flash("success", "Registration successful! Please log in.");
     res.redirect("/moments/v1/login");
   } catch (err) {
-    return req.flash("error", err.message);
-    // console.log(err)
-    // res.redirect("/moments/v1/signup");
-    // res.send("Something went wrong")
+    req.flash("error", err.message);
+    return res.redirect("/moments/v1/signup");
   }
 };
 
