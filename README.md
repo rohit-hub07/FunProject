@@ -1,73 +1,168 @@
-# Digital Platform for Local Artists
+# Momment's
 
-I have build a website for local artists where they can share thier artworks and post them. Other users can buy the artwork if they like it.
+It's a project for my own personal use where I can upload pictures. It's like having your own mini instagram
 
-## Table of Contents
+## Deployed Url
+- **https://codearena.live**
 
-- [About](#about)
-- [Features](#features)
-- [Usage](#usage)
-- [Technologies Used](#technologies-used)
+## ✨ Features
 
-## About
+- **User Authentication**: Secure signup/login system using Passport.js with local strategy
+- **Image Upload**: Upload images directly to Cloudinary with automatic optimization
+- **Post Management**: Create, edit, and delete your image posts with titles and descriptions
+- **User Roles**: Support for both regular users and admin roles
+- **Authorization**: Only post owners can edit or delete their content
+- **Session Management**: Persistent sessions with cookie-based authentication
+- **Flash Messages**: User-friendly notifications for actions and errors
+- **Responsive Design**: Clean UI built with EJS templates
 
-Artistans provide a platform for the local artists where they can share their work to a larger audience and if any user likes the art they can buy it. The platform have features like uploadartwork, login, signup. 
-To upload art and order any art work the user has to be logged in.
+## 🛠️ Tech Stack
 
-## Features
+### Backend
 
-- Upload Art
-- Login
-- Signup
-- Logout
-- View art
-- Order
-- Delete
-- Edit
+- **Node.js** & **Express.js** - Server framework
+- **MongoDB** & **Mongoose** - Database and ODM
+- **Passport.js** - Authentication middleware
+- **Cloudinary** - Image hosting and management
+- **Multer** - File upload handling
+- **bcryptjs** - Password hashing
 
-## Installation
+### Frontend
 
-1. Clone the repository:
-   ```sh
-   git clone https://github.com/rohit-hub07/College-Artistans-Website-.git
+- **EJS** - Templating engine
+- **EJS-Mate** - Layout support
+- **CSS** - Custom styling
+
+### Security & Middleware
+
+- **express-session** - Session management
+- **cookie-parser** - Cookie handling
+- **connect-flash** - Flash messages
+- **method-override** - HTTP method override for RESTful routes
+- **CORS** - Cross-origin resource sharing
+
+## 📋 Prerequisites
+
+- Node.js (v14 or higher)
+- MongoDB database
+- Cloudinary account
+
+## 🚀 Installation
+
+1. **Clone the repository**
+
+   ```bash
+   git clone <repository-url>
+   cd WebsiteForFun
    ```
-2. Navigate to the project directory:
-   ```sh
-   cd yourproject
-   ```
-3. Install dependencies:
-   ```sh
+
+2. **Install dependencies**
+
+   ```bash
    npm install
    ```
-4. Set up environment variables:
-   ```sh
-   cp .env.example .env
+
+3. **Configure environment variables**
+
+   Create a `.env` file in the root directory using the provided `env.example`:
+
+   ```env
+   DATABASE_URL=your_mongodb_connection_string
+   SECRET=your_session_secret_key
+   BASE_URL=http://localhost:5000
+   PORT=5000
+   CLOUD_NAME=your_cloudinary_cloud_name
+   CLOUDINARY_API=your_cloudinary_api_key
+   CLOUDINARY_SECRET=your_cloudinary_api_secret
+   CREATE_ADMIN_SECRET=your_admin_secret_for_registration
    ```
-5. Run the project:
-   ```sh
+
+4. **Start the application**
+
+   ```bash
    npm start
    ```
 
-## Usage
+   The application will run on `http://localhost:5000` (or your configured PORT)
 
-The user just have to login to upload their art. This is most useful for the local artist who fail to reach their work to broader audience.
+## 📁 Project Structure
 
-## Technologies Used
+```
+WebsiteForFun/
+├── controllers/          # Request handlers
+│   ├── post.controller.js
+│   └── user.controller.js
+├── dataBase/            # Database configuration
+│   └── db.js
+├── models/              # Mongoose schemas
+│   ├── Post.model.js
+│   └── User.model.js
+├── router/              # Express routes
+│   ├── post.router.js
+│   └── user.router.js
+├── utils/               # Utility functions
+│   └── auth.user.js
+├── views/               # EJS templates
+│   ├── layout/
+│   ├── posts/
+│   └── user/
+├── public/              # Static assets
+│   ├── script.js
+│   └── style.css
+├── cloudinary.config.js # Cloudinary setup
+└── index.js            # Application entry point
+```
 
-- Node.js
-- Express
-- MongoDB
-- EJS
-- Javascript
-- Rest Api
-- Bootstrap
-- Cloudinary
+## 🔑 API Routes
 
-## Screenshots
-![Screenshot 2025-03-29 025032](https://github.com/user-attachments/assets/16cb536c-5425-433f-9027-99e4f1a438c5)
+### Post Routes (`/moments/v1`)
 
-![Screenshot 2025-03-29 025045](https://github.com/user-attachments/assets/13c98bbb-5f9f-444b-872e-b80ceeaa6474)
+- `GET /home` - View all posts
+- `GET /post` - New post form (authenticated)
+- `POST /post` - Create new post (authenticated)
+- `GET /show/:id` - View single post
+- `GET /edit/:id` - Edit post form (owner only)
+- `PATCH /post/:id` - Update post (owner only)
+- `DELETE /delete/:id` - Delete post (owner only)
+- `GET /order/:id` - Order/arrange posts (authenticated)
 
-![Screenshot 2025-03-29 025057](https://github.com/user-attachments/assets/a0887103-c504-4703-94c8-aabea87def84)
+### User Routes (`/moments/v1`)
 
-![Screenshot 2025-03-29 025105](https://github.com/user-attachments/assets/4645be83-d9d4-49f1-82c5-fce16f169629)
+- `POST /signup` - To register a new user you have to hit the /signup endpoint via postman or any services you like and also you have to provide the "CREATE_ADMIN_SECRET" in the req headers
+- `GET /login` - Login form
+- `POST /login` - Authenticate user
+- `GET /logout` - Logout user
+
+## 🔒 Authentication & Authorization
+
+- Users must be logged in to create, edit, or delete posts
+- Only the post owner can edit or delete their content
+- Admin role support for elevated permissions
+- Session-based authentication with 7-day cookie expiry
+
+## 🎨 Models
+
+### User Model
+
+- `username` (String, required)
+- `email` (String, required)
+- `role` (String: 'user' or 'admin', default: 'user')
+- Password (hashed, managed by passport-local-mongoose)
+
+### Post Model
+
+- `imageUrl` (String, required) - Cloudinary URL
+- `title` (String, required)
+- `description` (String, required)
+- `owner` (ObjectId, ref: User)
+- `ownername` (String)
+- `timestamps` (createdAt, updatedAt)
+
+## 👤 Author
+
+**Rohit**
+
+
+---
+
+_Built with ❤️ for personal photo management_
