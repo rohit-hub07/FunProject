@@ -7,6 +7,11 @@ const postSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  mediaType: {
+    type: String,
+    enum: ['image', 'video'],
+    default: 'image',
+  },
   title: {
     type: String,
     required: true,
@@ -22,7 +27,7 @@ const postSchema = new mongoose.Schema({
   ownername: {
     type: String,
   }
-}, {timestamps: true})
+}, { timestamps: true })
 
 const Post = mongoose.model('Post', postSchema);
 

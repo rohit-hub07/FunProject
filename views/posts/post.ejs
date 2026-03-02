@@ -6,12 +6,12 @@
       <p class="form-subtitle">Upload and share your beautiful memories</p>
 
       <form class="needs-validation" method="POST" action="/moments/v1/post" enctype="multipart/form-data" novalidate>
-        <!-- Image Upload -->
+        <!-- Image/Video Upload -->
         <div class="form-group">
-          <label for="imgUrl" class="form-label">Choose Image</label>
-          <input type="file" name="imgUrl" id="imgUrl" class="form-control" accept="image/*" required>
+          <label for="imageUrl" class="form-label">Choose Image or Video</label>
+          <input type="file" name="imageUrl" id="imageUrl" class="form-control" accept="image/*,video/*" required>
           <div class="invalid-feedback">
-            Please select an image to upload
+            Please select an image or video to upload
           </div>
         </div>
 

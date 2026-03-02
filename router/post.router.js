@@ -27,13 +27,13 @@ router.get("/post", authenticateUser, postController);
 router.post(
   "/post",
   authenticateUser,
-  upload.single("imgUrl"),
+  upload.single("imageUrl"),
   postUploadController
 );
 
 router.get("/edit/:id", authenticateUser, isOwner, editPostController);
 
-router.patch("/post/:id", authenticateUser, isOwner,upload.single("imageUrl"), updatePostController);
+router.patch("/post/:id", authenticateUser, isOwner, upload.single("imageUrl"), updatePostController);
 
 router.delete("/delete/:id", authenticateUser, isOwner, deletePostController);
 

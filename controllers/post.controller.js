@@ -18,9 +18,21 @@ const postUploadController = async (req, res) => {
     let url = req.file.path;
     if (!url) {
       return res.status(400).json({
-        message: "Please provide image!",
+        message: "Please provide image or video!",
       });
     }
+
+    // Determine media type based on file mimetype
+    const mediaType = req.file.mimetype.startsWith('video/') ? 'video' : 'image';
+
+    // For videos, ensure we're using the correct Cloudinary URL
+    // Cloudinary should automatically set resource_type, but we can verify
+    console.log('Uploaded file info:', {
+      mimetype: req.file.mimetype,
+      path: req.file.path,
+      filename: req.file.filename
+    });
+
     const user = req.user._id;
     const owner = await User.findById(user);
     if (!owner) {
@@ -38,6 +50,7 @@ const postUploadController = async (req, res) => {
 
     const newPost = await new Post({
       imageUrl: url,
+      mediaType: mediaType,
       title: post.title,
       description: post.description,
       owner: user,
@@ -86,9 +99,10 @@ const updatePostController = async (req, res) => {
     post.title = title;
     post.description = description;
 
-    // Update the image if available.
+    // Update the image/video if available.
     if (req.file) {
       post.imageUrl = req.file.path;
+      post.mediaType = req.file.mimetype.startsWith('video/') ? 'video' : 'image';
     }
 
     await post.save();
@@ -120,7 +134,15 @@ const showPostController = async (req, res) => {
       return req.flash("error", "Invalid Id!");
     }
     const post = await Post.findById({ _id: id });
-    // console.log(post)
+
+    // Fix Cloudinary video URLs that might have wrong resource_type
+    if (post && post.mediaType === 'video' && post.imageUrl) {
+      // Ensure video URLs use /video/upload/ instead of /image/upload/
+      post.imageUrl = post.imageUrl.replace('/image/upload/', '/video/upload/');
+      console.log('Video URL:', post.imageUrl);
+      console.log('Media Type:', post.mediaType);
+    }
+
     if (!post) {
       return req.flash("error", "Post doesn't exist!");
     }

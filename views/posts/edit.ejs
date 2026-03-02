@@ -6,20 +6,30 @@
       <p class="form-subtitle">Update your moment's details</p>
 
       <form method="POST" action="/moments/v1/post/<%= post._id %>?_method=PATCH" enctype="multipart/form-data">
-        <!-- Current Image Preview -->
+        <!-- Current Media Preview -->
         <div class="form-group">
-          <label class="form-label">Current Image</label>
+          <label class="form-label">Current <%= post.mediaType==='video' ? 'Video' : 'Image' %></label>
           <div style="border-radius: 12px; overflow: hidden; margin-bottom: 1rem;">
-            <img src="<%= post.imageUrl %>" alt="<%= post.title %>" style="width: 100%; height: auto; display: block;">
+            <% if (post.mediaType==='video' ) { %>
+              <video controls playsinline preload="metadata" style="width: 100%; height: auto; display: block;">
+                <source src="<%= post.imageUrl %>#t=0.001" type="video/mp4">
+                <source src="<%= post.imageUrl %>#t=0.001" type="video/webm">
+                <source src="<%= post.imageUrl %>#t=0.001">
+                Your browser does not support the video tag.
+              </video>
+              <% } else { %>
+                <img src="<%= post.imageUrl %>" alt="<%= post.title %>"
+                  style="width: 100%; height: auto; display: block;">
+                <% } %>
           </div>
         </div>
 
-        <!-- New Image Upload (Optional) -->
+        <!-- New Media Upload (Optional) -->
         <div class="form-group">
-          <label for="imageUrl" class="form-label">Change Image (Optional)</label>
-          <input type="file" name="imageUrl" id="imageUrl" class="form-control" accept="image/*">
+          <label for="imageUrl" class="form-label">Change Image/Video (Optional)</label>
+          <input type="file" name="imageUrl" id="imageUrl" class="form-control" accept="image/*,video/*">
           <small style="color: var(--text-secondary); font-size: 0.85rem; display: block; margin-top: 0.5rem;">
-            Leave empty to keep the current image
+            Leave empty to keep the current <%= post.mediaType==='video' ? 'video' : 'image' %>
           </small>
         </div>
 

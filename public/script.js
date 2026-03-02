@@ -43,8 +43,8 @@
     const lightboxImage = lightbox.querySelector('.lightbox-image');
     const closeBtn = lightbox.querySelector('.lightbox-close');
 
-    // Open lightbox on detail page image click
-    const detailImages = document.querySelectorAll('.detail-image');
+    // Open lightbox on detail page image click (only for images, not videos)
+    const detailImages = document.querySelectorAll('img.detail-image');
     detailImages.forEach(img => {
       img.addEventListener('click', () => {
         lightboxImage.src = img.src;
@@ -244,6 +244,48 @@
   }
 
   // ============================================
+  // VIDEO PLAYBACK ON HOVER
+  // ============================================
+  function initVideoHoverPlay() {
+    const galleryItems = document.querySelectorAll('.gallery-item');
+
+    galleryItems.forEach(item => {
+      const video = item.querySelector('.gallery-image-wrapper video');
+      if (!video) return;
+
+      const playIndicator = item.querySelector('.video-play-indicator');
+
+      item.addEventListener('mouseenter', () => {
+        video.play().catch(err => console.log('Video play failed:', err));
+        if (playIndicator) {
+          playIndicator.style.opacity = '0';
+        }
+      });
+
+      item.addEventListener('mouseleave', () => {
+        video.pause();
+        video.currentTime = 0;
+        if (playIndicator) {
+          playIndicator.style.opacity = '1';
+        }
+      });
+
+      // Also handle when video is playing/paused programmatically
+      video.addEventListener('play', () => {
+        if (playIndicator) {
+          playIndicator.style.opacity = '0';
+        }
+      });
+
+      video.addEventListener('pause', () => {
+        if (playIndicator) {
+          playIndicator.style.opacity = '1';
+        }
+      });
+    });
+  }
+
+  // ============================================
   // INITIALIZE ALL FEATURES
   // ============================================
   function init() {
@@ -256,6 +298,7 @@
         initScrollToTop();
         initImageLoadAnimation();
         initNavbarScroll();
+        initVideoHoverPlay();
         // Uncomment for subtle tilt effect (optional, might be too much)
         // initCardTilt();
       });
@@ -266,6 +309,7 @@
       initScrollToTop();
       initImageLoadAnimation();
       initNavbarScroll();
+      initVideoHoverPlay();
       // initCardTilt();
     }
   }

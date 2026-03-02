@@ -11,9 +11,14 @@ cloudinary.config({
 
 const storage = new CloudinaryStorage({
   cloudinary: cloudinary,
-  params: {
-    folder: "ArtistansProjectCollege",
-    allowed_formats: ["png", "jpg", "jpeg"],
+  params: async (req, file) => {
+    const isVideo = file.mimetype.startsWith('video/');
+    return {
+      folder: "ArtistansProjectCollege",
+      allowed_formats: ["png", "jpg", "jpeg", "mp4", "mov", "avi", "mkv", "webm"],
+      resource_type: isVideo ? "video" : "image",
+      format: isVideo ? "mp4" : undefined, // Convert videos to mp4 for better compatibility
+    };
   },
 });
 
