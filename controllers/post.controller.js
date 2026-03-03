@@ -13,7 +13,7 @@ const privatePostController = async (req, res) => {
   res.render("./posts/privatePosts", { allPosts, isOwner });
 };
 
-const makePostPrivate = async (req, res) => {
+const changePostVisibility = async (req, res) => {
   try {
     const { id } = req.params;
     if (!id) {
@@ -23,7 +23,11 @@ const makePostPrivate = async (req, res) => {
     if (!post) {
       return req.flash("error", "Post doesn't exist!")
     }
-    post.isPrivate = true;
+    if(!post.isPrivate){
+      post.isPrivate = true;
+    }else{
+      post.isPrivate = false;
+    }
     await post.save();
     res.redirect("/moments/v1/home");
   } catch (error) {
@@ -211,5 +215,5 @@ export {
   showPostController,
   orderPostController,
   privatePostController,
-  makePostPrivate
+  changePostVisibility
 };

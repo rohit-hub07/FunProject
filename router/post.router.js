@@ -13,7 +13,7 @@ import {
   deletePostController,
   orderPostController,
   privatePostController,
-  makePostPrivate
+  changePostVisibility
 } from "../controllers/post.controller.js";
 
 dotenv.config();
@@ -41,7 +41,7 @@ router.patch("/post/:id", authenticateUser, isOwner, upload.single("imageUrl"), 
 
 router.delete("/delete/:id", authenticateUser, isOwner, deletePostController);
 
-router.patch("/makeprivate/:id", authenticateUser, isOwner, makePostPrivate);
+router.patch("/changepostvisibility/:id", authenticateUser, isOwner, changePostVisibility);
 
 router.get("/show/:id", showPostController);
 
