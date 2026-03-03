@@ -2,7 +2,7 @@ import Post from "../models/Post.model.js";
 
 const authenticateUser = async (req, res, next) => {
   if (req.isAuthenticated()) {
-    // res.locals.currUser = req.session.user;
+    res.locals.currUser = req.session.user;
     next();
   } else {
     req.flash("error", "You must login first! ");
