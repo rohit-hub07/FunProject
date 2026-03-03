@@ -34,7 +34,7 @@ app.set("view engine", "ejs");
 
 //cors
 const corsOptions = {
-  origin: process.env.BASE_URL,
+  origin: [process.env.BASE_URL, process.env.PRODUCTION],
 };
 
 app.use(cors(corsOptions));
