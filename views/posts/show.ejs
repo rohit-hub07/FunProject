@@ -50,8 +50,9 @@
                 </button>
               </form>
               <form action="/moments/v1/changepostvisibility/<%= post._id %>?_method=PATCH" method="POST" style="flex: 1;">
+                <% const actionText = post.isPrivate ? "public" : "private"; %>
                 <button type="submit" class="btn-action btn-success"
-                  onclick="return confirm('Are you sure you want to make this post private')">
+                   onclick="return confirm('Are you sure you want to make this post <%= actionText %>?')">
                   <% if (post.isPrivate == false){ %>
                     🔒Make private
                   <% } else { %>
