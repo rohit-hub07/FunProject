@@ -11,32 +11,39 @@ const signupUser = async (req, res) => {
 };
 
 const registerUser = async (req, res) => {
-  const secret = req.header("admin-secret") || 'no-secret-provided';
-  if (secret != process.env.CREATE_ADMIN_SECRET) {
-    return res.status(403).json({error: "Nice try!", success: false})
-  }
-  const { username, email, role, password } = req.body;
-  // console.log(userCredentials);
-  //check for registered user
-  const existingUser = await User.findOne({ email });
-  if (existingUser) {
-    req.flash("error", "A user already exists with the current credentials!");
-    return res.redirect("/moments/v1/login");
-  }
-  try {
-    const user = new User({
-      username,
-      email,
-      role,
+  const secret = req.header("admin-secret") || "no-secret-provided";
+
+  if (secret !== process.env.CREATE_ADMIN_SECRET) {
+    return res.status(403).json({
+      error: "Nice try!",
+      success: false,
     });
-    // console.log(user)
+  }
+
+  const { username, email, role, password } = req.body;
+
+  const existingUser = await User.findOne({ email });
+
+  if (existingUser) {
+    return res.status(400).json({
+      message: "User already exists",
+      success: false,
+    });
+  }
+
+  try {
+    const user = new User({ username, email, role });
     await User.register(user, password);
-    // console.log(registeredUser)
-    req.flash("success", "Registration successful! Please log in.");
-    res.redirect("/moments/v1/login");
+
+    return res.status(201).json({
+      message: "User registered successfully",
+      success: true,
+    });
   } catch (err) {
-    req.flash("error", err.message);
-    return res.redirect("/moments/v1/signup");
+    return res.status(500).json({
+      message: err.message,
+      success: false,
+    });
   }
 };
 
