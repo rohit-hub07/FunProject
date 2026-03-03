@@ -3,7 +3,6 @@ import passport from "passport";
 import { authenticateUser } from "../utils/auth.user.js";
 
 import {
-  signupUser,
   registerUser,
   loginUser,
   loginUserController,
@@ -12,7 +11,6 @@ import {
 
 const router = express.Router();
 
-// router.get("/signup", signupUser);
 
 router.post("/signup", registerUser);
 
