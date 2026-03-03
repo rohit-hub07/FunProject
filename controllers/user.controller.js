@@ -13,8 +13,7 @@ const signupUser = async (req, res) => {
 const registerUser = async (req, res) => {
   const secret = req.header("admin-secret") || 'no-secret-provided';
   if (secret != process.env.CREATE_ADMIN_SECRET) {
-    req.flash("error", "You don't have access to perform this action!");
-    return res.redirect("/moments/v1/home");
+    return res.status(403).json({error: "Nice try!", success: false})
   }
   const { username, email, role, password } = req.body;
   // console.log(userCredentials);
