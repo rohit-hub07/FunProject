@@ -4,9 +4,32 @@ import { isOwner } from "../utils/auth.user.js";
 import User from "../models/User.model.js";
 
 const userController = async (req, res) => {
-  let allPosts = await Post.find({}).populate("owner");
+  let allPosts = await Post.find({isPrivate: false}).populate("owner");
   res.render("./posts/home", { allPosts, isOwner });
 };
+
+const privatePostController = async (req, res) => {
+  let allPosts = await Post.find({ isPrivate: true }).populate("owner");
+  res.render("./posts/privatePosts", { allPosts, isOwner });
+};
+
+const makePostPrivate = async (req, res) => {
+  try {
+    const { id } = req.params;
+    if (!id) {
+      return req.flash("error", "Post doesn't exist!")
+    }
+    const post = await Post.findById(id);
+    if (!post) {
+      return req.flash("error", "Post doesn't exist!")
+    }
+    post.isPrivate = true;
+    await post.save();
+    res.redirect("/moments/v1/home");
+  } catch (error) {
+    return req.flash("error", "Something went wrong!!")
+  }
+}
 
 const postController = (req, res) => {
   res.render("./posts/post");
@@ -187,4 +210,6 @@ export {
   deletePostController,
   showPostController,
   orderPostController,
+  privatePostController,
+  makePostPrivate
 };

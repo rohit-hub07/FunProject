@@ -1,0 +1,61 @@
+<%- layout('layout/boilerPlate') %>
+
+  <div class="gallery-container">
+
+    <!-- Masonry Grid Gallery -->
+    <div class="masonry-grid">
+      <% for(let post of allPosts) { %>
+        <div class="gallery-item">
+          <a href="/moments/v1/show/<%=post._id %>">
+            <div class="gallery-card">
+              <div class="gallery-image-wrapper">
+                <% if (post.mediaType==='video' ) { %>
+                  <video class="gallery-image" style="object-fit: cover; width: 100%; height: 100%;" muted loop
+                    playsinline preload="metadata">
+                    <source src="<%= post.imageUrl %>#t=0.001" type="video/mp4">
+                    Your browser does not support the video tag.
+                  </video>
+                  <div class="video-play-indicator">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" width="48" height="48">
+                      <path d="M8 5v14l11-7z" />
+                    </svg>
+                  </div>
+                  <div class="video-badge">🎬 VIDEO</div>
+                  <% } else { %>
+                    <img class="gallery-image" src="<%= post.imageUrl %>" alt="<%= post.title %>" loading="lazy">
+                    <% } %>
+                      <div class="gallery-overlay">
+                        <h5>
+                          <%= post.title %>
+                        </h5>
+                        <p>
+                          <%= post && post.ownername ? post.ownername : "bikram" %>
+                        </p>
+                      </div>
+              </div>
+              <div class="gallery-card-body">
+                <h5 class="gallery-card-title">
+                  <%= post.title %>
+                </h5>
+                <p class="gallery-card-text">
+                  <%= post && post.ownername ? post.ownername : "bikram" %>
+                </p>
+              </div>
+            </div>
+          </a>
+        </div>
+        <% } %>
+    </div>
+
+    <!-- Empty state if no posts -->
+    <% if(allPosts.length===0) { %>
+      <div style="text-align: center; padding: 4rem 2rem;">
+        <h2 style="font-size: 2rem; color: var(--text-secondary); margin-bottom: 1rem;">📸 No moments yet</h2>
+        <p style="color: var(--text-secondary); margin-bottom: 2rem;">Be the first to share a beautiful moment!</p>
+        <a href="/moments/v1/post" class="btn-edit"
+          style="display: inline-block; padding: 1rem 2rem; border-radius: 12px; text-decoration: none;">
+          Upload Your First Photo or Video
+        </a>
+      </div>
+      <% } %>
+  </div>

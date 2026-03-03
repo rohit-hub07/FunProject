@@ -12,6 +12,8 @@ import {
   updatePostController,
   deletePostController,
   orderPostController,
+  privatePostController,
+  makePostPrivate
 } from "../controllers/post.controller.js";
 
 dotenv.config();
@@ -21,6 +23,8 @@ const upload = multer({ storage: storage });
 const router = express.Router();
 
 router.get("/home", userController);
+
+router.get("/privateposts",authenticateUser, privatePostController);
 
 router.get("/post", authenticateUser, postController);
 
@@ -36,6 +40,8 @@ router.get("/edit/:id", authenticateUser, isOwner, editPostController);
 router.patch("/post/:id", authenticateUser, isOwner, upload.single("imageUrl"), updatePostController);
 
 router.delete("/delete/:id", authenticateUser, isOwner, deletePostController);
+
+router.patch("/makeprivate/:id", authenticateUser, isOwner, makePostPrivate);
 
 router.get("/show/:id", showPostController);
 

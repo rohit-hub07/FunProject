@@ -49,6 +49,12 @@
                   🗑️ Delete
                 </button>
               </form>
+              <form action="/moments/v1/makeprivate/<%= post._id %>?_method=PATCH" method="POST" style="flex: 1;">
+                <button type="submit" class="btn-action btn-delete"
+                  onclick="return confirm('Are you sure you want to make this post private')">
+                  Make private
+                </button>
+              </form>
               <a href="/moments/v1/edit/<%= post._id %>" style="flex: 1;">
                 <button class="btn-action btn-edit" style="width: 100%;">
                   ✏️ Edit

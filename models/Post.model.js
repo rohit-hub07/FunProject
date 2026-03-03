@@ -20,6 +20,11 @@ const postSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  isPrivate: {
+    type:Boolean,
+    default: false,
+    index: true,
+  },
   owner: {
     type: Schema.Types.ObjectId,
     ref: "User"
