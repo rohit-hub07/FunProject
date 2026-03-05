@@ -28,6 +28,6 @@ router.post(
   loginUserController
 );
 
-router.post("/change-password", changePassword);
+router.post("/change-password",authenticateUser, changePassword);
 
 export default router;
