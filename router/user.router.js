@@ -7,6 +7,7 @@ import {
   loginUser,
   loginUserController,
   logOutUser,
+  changePassword,
 } from "../controllers/user.controller.js";
 
 const router = express.Router();
@@ -26,5 +27,7 @@ router.post(
   }),
   loginUserController
 );
+
+router.post("/change-password", changePassword);
 
 export default router;

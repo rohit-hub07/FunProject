@@ -70,4 +70,39 @@ const loginUserController = async (req, res) => {
   res.redirect("/moments/v1/home");
 };
 
-export { signupUser, registerUser, loginUser, loginUserController, logOutUser };
+const changePassword = async (req, res) => {
+  const { email, newPassword } = req.body;
+
+  if (!email || !newPassword) {
+    return res.status(400).json({
+      message: "Email and new password are required",
+      success: false,
+    });
+  }
+
+  try {
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      return res.status(404).json({
+        message: "User not found",
+        success: false,
+      });
+    }
+
+    await user.setPassword(newPassword);
+    await user.save();
+
+    return res.status(200).json({
+      message: "Password changed successfully",
+      success: true,
+    });
+  } catch (err) {
+    return res.status(500).json({
+      message: err.message,
+      success: false,
+    });
+  }
+};
+
+export { signupUser, registerUser, loginUser, loginUserController, logOutUser, changePassword };
